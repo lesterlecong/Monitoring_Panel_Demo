@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>Images/Analog Meter Background.png</file>
+        <file>Images/Analog Meter Inner.png</file>
+        <file>Images/Analog Meter Needle.png</file>
+        <file>Images/Thermometer Background.png</file>
+        <file>Images/Thermometer fifth_level.png</file>
+        <file>Images/Thermometer first_level.png</file>
+        <file>Images/Thermometer fourth_level.png</file>
+        <file>Images/Thermometer second_level.png</file>
+        <file>Images/Thermometer sixth_level.png</file>
+        <file>Images/Thermometer third_level.png</file>
+    </qresource>
+</RCC>
