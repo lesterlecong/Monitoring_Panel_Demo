@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include "accelerometerhandler.h"
+#include "serialporthandler.h"
 
 int main(int argc, char *argv[])
 {
@@ -11,6 +12,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     qmlRegisterType<AccelerometerHandler>("com.kmi.accelerometerhandler",1,0,"AccelerometerHandler");
+    qmlRegisterType<SerialPortHandler>("com.kmi.serialporthandler",1,0,"SerialPortHandler");
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())
