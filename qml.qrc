@@ -12,5 +12,8 @@
         <file>Images/Thermometer second_level.png</file>
         <file>Images/Thermometer sixth_level.png</file>
         <file>Images/Thermometer third_level.png</file>
+        <file>Images/LED green.png</file>
+        <file>Images/LED red.png</file>
+        <file>Images/LED green.svg</file>
     </qresource>
 </RCC>
