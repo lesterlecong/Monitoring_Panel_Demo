@@ -213,8 +213,8 @@ ApplicationWindow {
         y: -6
         width: 250
         height: 250
+        anchors.verticalCenter: parent.verticalCenter
         fillMode: Image.PreserveAspectFit
-        anchors.top: thermometer_bearing_1.bottom
         Image {
             id: thermometer_first_level_2
             fillMode: Image.PreserveAspectFit
@@ -322,7 +322,6 @@ ApplicationWindow {
             visible: false
             source: "Images/Thermometer sixth_level.png"
         }
-        anchors.topMargin: 25
         anchors.leftMargin: 25
         source: "Images/Thermometer Background.png"
         anchors.left: parent.left
@@ -345,8 +344,9 @@ ApplicationWindow {
         y: -9
         width: 250
         height: 250
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 25
         fillMode: Image.PreserveAspectFit
-        anchors.top: thermometer_bearing_2.bottom
         Image {
             id: thermometer_first_level_3
             fillMode: Image.PreserveAspectFit
@@ -454,7 +454,6 @@ ApplicationWindow {
             visible: false
             source: "Images/Thermometer sixth_level.png"
         }
-        anchors.topMargin: 25
         source: "Images/Thermometer Background.png"
         anchors.leftMargin: 25
         anchors.left: parent.left
@@ -474,12 +473,12 @@ ApplicationWindow {
     Image {
         id: gyro
         x: 1042
-        width: 400
-        height: 400
+        width: 360
+        height: 360
         anchors.right: parent.right
-        anchors.rightMargin: 0
+        anchors.rightMargin: 25
         anchors.top: parent.top
-        anchors.topMargin: 0
+        anchors.topMargin: 25
         fillMode: Image.PreserveAspectFit
         source: "Images/Analog Meter Background.png"
 
@@ -593,9 +592,11 @@ ApplicationWindow {
     Item {
         id: accelx_item
         x: 400
-        y: -30
         width: 360
-        height:360
+        height: 360
+        anchors.top: parent.top
+        anchors.topMargin: 25
+        anchors.horizontalCenter: parent.horizontalCenter
 
         ChartView {
             ValueAxis {
@@ -655,7 +656,9 @@ ApplicationWindow {
         x: 400
         y: 280
         width: 360
-        height:360
+        height: 360
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
 
         ChartView {
             ValueAxis {
@@ -712,7 +715,10 @@ ApplicationWindow {
         x: 400
         y: 590
         width: 360
-        height:360
+        height: 360
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 25
+        anchors.horizontalCenter: parent.horizontalCenter
 
         ChartView {
             ValueAxis {
@@ -768,90 +774,191 @@ ApplicationWindow {
     }
 
 
-    GridLayout {
+
+
+
+
+
+
+
+
+
+    ColumnLayout {
         x: 858
-        y: 370
+        y: 530
+
+
+
+
+
+    }
+
+    GridLayout {
+        x: 766
+        width: 360
+        height: 295
+        anchors.top: gyro.bottom
+        anchors.topMargin: 5
+        anchors.right: parent.right
+        anchors.rightMargin: 25
+        columnSpacing: 50
+        rowSpacing: 6
+        anchors.verticalCenter: parent.verticalCenter
         rows: 1
         columns: 2
 
         ColumnLayout {
+            spacing: 0
 
-            Image {
+            Item {
                 id: led_bearing_1
+                width: 60
+                height: 60
                 Layout.preferredHeight: 80
                 Layout.preferredWidth: 80
-                sourceSize.height: 800
-                sourceSize.width: 800
-                fillMode: Image.PreserveAspectFit
-                source: "Images/LED green.svg"
-                mipmap: true
+
+                Image {
+                    id: led_bearing_off_1
+                    anchors.fill: parent
+                    sourceSize.height: 800
+                    mipmap: true
+                    sourceSize.width: 800
+                    Layout.preferredWidth: 80
+                    source: "Images/LED red.png"
+                    fillMode: Image.PreserveAspectFit
+                    Layout.preferredHeight: 80
+                }
+
+                Image {
+                    id: led_bearing_on_1
+                    width: 80
+                    height: 80
+                    anchors.rightMargin: 0
+                    anchors.bottomMargin: 0
+                    anchors.fill: parent
+                    Layout.preferredHeight: 80
+                    Layout.preferredWidth: 80
+                    sourceSize.height: 800
+                    sourceSize.width: 800
+                    fillMode: Image.PreserveAspectFit
+                    source: "Images/LED green.svg"
+                    mipmap: true
+
+
+                }
 
                 function setState(state) {
-                    if(state > 0) {
-                        led_bearing_1.source = "Images/LED green.svg"
-                    }
-                    else {
-                        led_bearing_1.source = "Images/LED red.png"
-                    }
+                    led_bearing_on_1.visible = (state > 0)
+                    led_bearing_off_1.visible = (state <= 0)
                 }
+
             }
 
-            Image {
+            Item {
                 id: led_bearing_2
+                width: 60
+                height: 60
                 Layout.preferredHeight: 80
                 Layout.preferredWidth: 80
-                fillMode: Image.PreserveAspectFit
-                sourceSize.width: 800
-                source: "Images/LED green.png"
-                sourceSize.height: 800
-                mipmap: true
+                Image {
+                    id: led_bearing_off_2
+                    mipmap: true
+                    sourceSize.height: 800
+                    sourceSize.width: 800
+                    Layout.preferredWidth: 80
+                    source: "Images/LED red.png"
+                    fillMode: Image.PreserveAspectFit
+                    anchors.fill: parent
+                    Layout.preferredHeight: 80
+                }
+
+                Image {
+                    id: led_bearing_on_2
+                    sourceSize.height: 800
+                    mipmap: true
+                    sourceSize.width: 800
+                    Layout.preferredWidth: 80
+                    source: "Images/LED green.svg"
+                    fillMode: Image.PreserveAspectFit
+                    anchors.fill: parent
+                    Layout.preferredHeight: 80
+                }
 
                 function setState(state) {
-                    if(state > 0) {
-                        led_bearing_2.source = "Images/LED green.svg"
-                    }
-                    else {
-                        led_bearing_2.source = "Images/LED red.png"
-                    }
+                    led_bearing_on_2.visible = (state > 0)
+                    led_bearing_off_2.visible = (state <= 0)
                 }
             }
 
-            Image {
+            Item {
                 id: led_tube_1
+                width: 60
+                height: 60
                 Layout.preferredHeight: 80
                 Layout.preferredWidth: 80
-                sourceSize.width: 800
-                fillMode: Image.PreserveAspectFit
-                source: "Images/LED green.png"
-                sourceSize.height: 800
+                Image {
+                    id: led_tube_off_1
+                    sourceSize.height: 800
+                    mipmap: true
+                    sourceSize.width: 800
+                    Layout.preferredWidth: 80
+                    source: "Images/LED red.png"
+                    fillMode: Image.PreserveAspectFit
+                    anchors.fill: parent
+                    Layout.preferredHeight: 80
+                }
+
+                Image {
+                    id: led_tube_on_1
+                    mipmap: true
+                    sourceSize.height: 800
+                    sourceSize.width: 800
+                    Layout.preferredWidth: 80
+                    source: "Images/LED green.svg"
+                    fillMode: Image.PreserveAspectFit
+                    anchors.fill: parent
+                    Layout.preferredHeight: 80
+                }
 
                 function setState(state) {
-                    if(state > 0) {
-                        led_tube_1.source = "Images/LED green.svg"
-                    }
-                    else {
-                        led_tube_1.source = "Images/LED red.png"
-                    }
+                    led_tube_on_1.visible = (state > 0)
+                    led_tube_off_1.visible = (state <= 0)
                 }
             }
 
-            Image {
+            Item {
                 id: led_shock_1
+                width: 60
+                height: 60
                 Layout.preferredHeight: 80
                 Layout.preferredWidth: 80
-                fillMode: Image.PreserveAspectFit
-                sourceSize.width: 800
-                source: "Images/LED green.png"
-                sourceSize.height: 800
+                Image {
+                    id: led_shock_off_1
+                    mipmap: true
+                    sourceSize.height: 800
+                    sourceSize.width: 800
+                    Layout.preferredWidth: 80
+                    source: "Images/LED red.png"
+                    fillMode: Image.PreserveAspectFit
+                    anchors.fill: parent
+                    Layout.preferredHeight: 80
+                }
+
+                Image {
+                    id: led_shock_on_1
+                    sourceSize.height: 800
+                    mipmap: true
+                    sourceSize.width: 800
+                    Layout.preferredWidth: 80
+                    source: "Images/LED green.svg"
+                    fillMode: Image.PreserveAspectFit
+                    anchors.fill: parent
+                    Layout.preferredHeight: 80
+                }
 
                 function setState(state) {
-                    if(state > 0) {
-
-                        led_shock_1.source = "Images/LED green.svg"
-                    }
-                    else {
-                        led_shock_1.source = "Images/LED red.png"
-                    }
+                    led_shock_on_1.visible = (state > 0)
+                    led_shock_off_1.visible = (state <= 0)
                 }
             }
         }
@@ -860,6 +967,7 @@ ApplicationWindow {
 
             Label {
                 id: led_label_bearing_1
+                width: 120
                 color: "#6f7479"
                 text: qsTr("Bearing 1")
                 Layout.preferredHeight: 80
@@ -872,6 +980,7 @@ ApplicationWindow {
 
             Label {
                 id: led_label_bearing_2
+                width: 120
                 color: "#6f7479"
                 text: qsTr("Bearing 2")
                 Layout.preferredHeight: 80
@@ -884,6 +993,7 @@ ApplicationWindow {
 
             Label {
                 id: led_tube_bearing_1
+                width: 120
                 color: "#6f7479"
                 text: qsTr("Tube")
                 Layout.preferredHeight: 80
@@ -896,6 +1006,7 @@ ApplicationWindow {
 
             Label {
                 id: led_label_shock_1
+                width: 120
                 color: "#6f7479"
                 text: qsTr("Shock")
                 Layout.preferredHeight: 80
@@ -908,92 +1019,110 @@ ApplicationWindow {
         }
     }
 
-
-    ComboBox {
-        id: serialPortsComboBox
+    RowLayout {
         x: 14
         y: 901
-        width: 126
-        height: 40
-        textRole: "text"
-        editable: false
+        anchors.right: parent.right
+        anchors.rightMargin: 25
+
+        ComboBox {
+            id: serialPortsComboBox
+            Layout.preferredHeight: 40
+            Layout.preferredWidth: 126
+            textRole: "text"
+            editable: false
 
 
-        model: ListModel
-        {
-            id: portListItems
+            model: ListModel
+            {
+                id: portListItems
 
+            }
+
+
+
+            function addPort(portName) {
+                //console.log("New Port Received:" + portName)
+                if(serialPortsComboBox.find(portName) === -1) {
+                    //console.log("Adding Port:" + portName)
+                    portListItems.append({text: portName})
+                    serialPortsComboBox.currentIndex = serialPortsComboBox.find(portName)
+                }
+            }
+
+            onCurrentIndexChanged: console.debug(portListItems.get(currentIndex).text + ", " + portListItems.get(currentIndex).color)
+            Component.onCompleted: serialPortHandler.availablePorts()
         }
 
-
-
-        function addPort(portName) {
-            //console.log("New Port Received:" + portName)
-            if(serialPortsComboBox.find(portName) === -1) {
-                //console.log("Adding Port:" + portName)
-                portListItems.append({text: portName})
-                serialPortsComboBox.currentIndex = serialPortsComboBox.find(portName)
+        ComboBox {
+            id: baudRateComboBox
+            Layout.preferredHeight: 40
+            Layout.preferredWidth: 152
+            textRole: "text"
+            editable: false
+            currentIndex: 5
+            model: ListModel {
+                id: baudRateItems
+                ListElement{text: "110" ; value: 110}
+                ListElement{text: "300" ; value: 300}
+                ListElement{text: "600" ; value: 600}
+                ListElement{text: "1200" ; value: 1200}
+                ListElement{text: "2400" ; value: 2400}
+                ListElement{text: "9600" ; value: 9600}
+                ListElement{text: "14400" ; value: 14400}
+                ListElement{text: "19200" ; value: 19200}
+                ListElement{text: "38400" ; value: 38400}
+                ListElement{text: "57600" ; value: 57600}
+                ListElement{text: "115200" ; value: 115200}
+                ListElement{text: "230400" ; value: 230400}
+                ListElement{text: "460800" ; value: 460800}
+                ListElement{text: "921600" ; value: 921600}
             }
         }
 
-        onCurrentIndexChanged: console.debug(portListItems.get(currentIndex).text + ", " + portListItems.get(currentIndex).color)
-        Component.onCompleted: serialPortHandler.availablePorts()
-    }
+        Button {
+            id: button
+            text: qsTr("Connect")
+            Layout.preferredHeight: 40
+            Layout.preferredWidth: 108
+            onClicked: function() {
+                console.debug("Connect to serial " +
+                              portListItems.get(serialPortsComboBox.currentIndex).text +
+                              " with baud rate of " +
+                              baudRateItems.get(baudRateComboBox.currentIndex).value)
 
-
-    Button {
-        id: button
-        x: 304
-        y: 901
-        width: 108
-        height: 40
-        text: qsTr("Connect")
-        onClicked: function() {
-            console.debug("Connect to serial " +
-                          portListItems.get(serialPortsComboBox.currentIndex).text +
-                          " with baud rate of " +
-                          baudRateItems.get(baudRateComboBox.currentIndex).value)
-
-            serialPortHandler.portName = portListItems.get(serialPortsComboBox.currentIndex).text
-            serialPortHandler.baudRate = baudRateItems.get(baudRateComboBox.currentIndex).value
-            serialPortHandler.startSerialPort()
+                serialPortHandler.portName = portListItems.get(serialPortsComboBox.currentIndex).text
+                serialPortHandler.baudRate = baudRateItems.get(baudRateComboBox.currentIndex).value
+                serialPortHandler.startSerialPort()
+            }
         }
     }
 
 
-    ComboBox {
-        id: baudRateComboBox
-        x: 146
-        y: 901
-        width: 152
-        height: 40
-        textRole: "text"
-        editable: false
-        currentIndex: 5
-        model: ListModel {
-            id: baudRateItems
-            ListElement{text: "110" ; value: 110}
-            ListElement{text: "300" ; value: 300}
-            ListElement{text: "600" ; value: 600}
-            ListElement{text: "1200" ; value: 1200}
-            ListElement{text: "2400" ; value: 2400}
-            ListElement{text: "9600" ; value: 9600}
-            ListElement{text: "14400" ; value: 14400}
-            ListElement{text: "19200" ; value: 19200}
-            ListElement{text: "38400" ; value: 38400}
-            ListElement{text: "57600" ; value: 57600}
-            ListElement{text: "115200" ; value: 115200}
-            ListElement{text: "230400" ; value: 230400}
-            ListElement{text: "460800" ; value: 460800}
-            ListElement{text: "921600" ; value: 921600}
-        }
-    }
+
+
 
 
 
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1137,11 +1266,16 @@ D{i:16;anchors_x:104}D{i:23;anchors_height:200;anchors_width:200}D{i:24;anchors_
 D{i:25;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}D{i:26;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:12}
 D{i:28;anchors_x:104}D{i:36;anchors_y:85}D{i:37;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}
 D{i:38;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:12}D{i:42;anchors_width:126;anchors_x:177;anchors_y:245}
-D{i:43;anchors_height:100;anchors_width:100;anchors_x:25;anchors_y:350}D{i:39;anchors_height:100;anchors_width:100;anchors_x:25;anchors_y:350}
-D{i:44;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}D{i:47;anchors_height:200;anchors_width:200}
-D{i:70;anchors_x:104}D{i:79;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}
-D{i:80;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:12}D{i:82;anchors_x:104}
-D{i:90;anchors_y:85}D{i:91;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}
-D{i:92;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:12}D{i:78;anchors_y:85}
+D{i:43;anchors_height:100;anchors_width:100;anchors_x:25;anchors_y:350}D{i:39;anchors_height:100;anchors_width:100;anchors_x:1042;anchors_y:350}
+D{i:44;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}D{i:47;anchors_height:360;anchors_width:200;anchors_y:-30}
+D{i:52;anchors_height:360;anchors_y:280}D{i:57;anchors_height:360;anchors_y:590}D{i:67;anchors_height:80;anchors_width:80;anchors_x:0;anchors_y:"-344"}
+D{i:68;anchors_height:80;anchors_width:80;anchors_x:0;anchors_y:"-430"}D{i:70;anchors_x:104;anchors_y:"-344"}
+D{i:71;anchors_x:0;anchors_y:"-430"}D{i:73;anchors_x:0;anchors_y:"-344"}D{i:74;anchors_x:0;anchors_y:"-430"}
+D{i:76;anchors_x:0;anchors_y:"-344"}D{i:77;anchors_x:0;anchors_y:"-430"}D{i:79;anchors_x:104}
+D{i:64;anchors_x:766;anchors_y:370}D{i:88;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:12}
+D{i:89;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:12}D{i:90;anchors_x:104}
+D{i:91;anchors_x:104}D{i:98;anchors_y:85}D{i:99;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}
+D{i:100;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:12}D{i:101;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:12}
+D{i:87;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}D{i:86;anchors_y:85}
 }
  ##^##*/
