@@ -510,7 +510,7 @@ ApplicationWindow {
                 anchors.horizontalCenter: parent.horizontalCenter
                 lineHeight: 8
                 wrapMode: Text.NoWrap
-                font.pointSize: 200
+                font.pointSize: 80
                 fontSizeMode: Text.FixedSize
                 font.weight: Font.Bold
                 textFormat: Text.PlainText
@@ -1107,6 +1107,8 @@ ApplicationWindow {
 
 
 }
+
+
 
 
 
