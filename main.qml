@@ -510,7 +510,7 @@ ApplicationWindow {
                 anchors.horizontalCenter: parent.horizontalCenter
                 lineHeight: 8
                 wrapMode: Text.NoWrap
-                font.pointSize: 200
+                font.pointSize: 30
                 fontSizeMode: Text.FixedSize
                 font.weight: Font.Bold
                 textFormat: Text.PlainText
@@ -531,7 +531,7 @@ ApplicationWindow {
                 anchors.leftMargin: 0
                 anchors.top: rpm_value.bottom
                 anchors.topMargin: 0
-                font.pointSize: 60
+                font.pointSize: 30
                 wrapMode: Text.NoWrap
                 renderType: Text.QtRendering
                 lineHeight: 0.8
@@ -1107,6 +1107,10 @@ ApplicationWindow {
 
 
 }
+
+
+
+
 
 
 
