@@ -3,17 +3,259 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls.Styles 1.4
 import QtCharts 2.3
+
 import com.kmi.accelerometerhandler 1.0
 import com.kmi.serialporthandler 1.0
 
 ApplicationWindow {
     id: window
     visible: true
-    width: 1280
-    height: 960
-    color: "#2c2a2a"
+    width: 640
+    height: 480
+    color: "#090808"
     title: qsTr("Monitoring Panel")
 
+
+
+
+    Rectangle {
+        id: rpm_gyro_background
+        y: 103
+        width: (parent.height - 20)/3
+        height: width
+        color: "#2c2a2a"
+        anchors.left: accel_x_background.right
+        anchors.leftMargin: 5
+        anchors.bottom: accel_y_background.top
+        anchors.bottomMargin: 5
+        border.color: "#2c2a2a"
+
+        Image {
+            id: gyro
+            width: parent.width
+            height: parent.height
+            anchors.fill: parent
+            fillMode: Image.PreserveAspectFit
+            source: "Images/Analog Meter Background.png"
+
+            Image {
+                id: gyro_needle
+                width: parent.width
+                height: parent.height
+                rotation: 0
+                anchors.fill: parent
+                fillMode: Image.PreserveAspectFit
+                source: "Images/Analog Meter Needle.png"
+            }
+
+            Image {
+                id: gyro_inner
+                width: parent.width
+                height: parent.height
+                anchors.fill: parent
+                fillMode: Image.PreserveAspectFit
+                source: "Images/Analog Meter Inner.png"
+
+                Text {
+                    id: rpm_value
+                    y: 0
+                    width: parent.width
+                    height: (parent.height)*0.266667
+                    color: "#ffffff"
+                    text: qsTr("0<br>RPM")
+                    font.pixelSize: 12 + (12*((parent.width-150)/150))
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.bold: true
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    textFormat: Text.RichText
+                    wrapMode: Text.WordWrap
+                }
+            }
+
+            function needleValue(value) {
+                //console.log("Rotation:" + value)
+                gyro_needle.rotation = value * 1
+                rpm_value.text = value + "<br>RPM"
+            }
+        }
+    }
+
+
+    Rectangle {
+        id: thermo_bearing_background_1
+        x: 8
+        y: 10
+        width: (parent.height - 20)/3
+        height: width
+        color: "#2c2a2a"
+        anchors.right: accel_x_background.left
+        anchors.rightMargin: 5
+        anchors.bottom: accel_y_background.top
+        anchors.bottomMargin: 5
+        border.color: "#2c2a2a"
+
+        Image {
+            id: thermometer_bearing_1
+            width: parent.width
+            height: parent.height
+            anchors.fill: parent
+            clip: false
+            sourceSize.height: 0
+            fillMode: Image.PreserveAspectFit
+            source: "Images/Thermometer Background.png"
+            mipmap: true
+
+            Image {
+                id: thermo_level_0_1
+                width: parent.width
+                height: parent.height
+                anchors.fill: parent
+                fillMode: Image.PreserveAspectFit
+                source: "Images/Thermometer Level/0-01.png"
+                mipmap: true
+
+                Text {
+                    id: thermo_value_1
+                    y: (parent.height)*0.74666667
+                    width: parent.width
+                    height: (parent.height)*0.133333
+                    color: "#f1eeee"
+                    text: qsTr("100<br><sup>o</sup>C")
+                    font.pixelSize: 8 + (8*((parent.width-150)/150))
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    font.bold: true
+                    horizontalAlignment: Text.AlignHCenter
+                    textFormat: Text.RichText
+                    wrapMode: Text.WordWrap
+                }
+
+
+            }
+
+            ThermometerLevel {
+                id: thermo_bearing
+                width: parent.width
+                height: parent.height
+            }
+
+
+
+            function tempValue(value) {
+                //console.log("Value:" + value)
+                thermo_value_1.text = value + "<br><sup>o</sup>C";
+                thermo_bearing.level1.visible = (value >=1)
+                thermo_bearing.level2.visible = (value >=2)
+                thermo_bearing.level3.visible = (value >=3)
+                thermo_bearing.level4.visible = (value >=4)
+                thermo_bearing.level5.visible = (value >=5)
+                thermo_bearing.level6.visible = (value >=6)
+                thermo_bearing.level7.visible = (value >=7)
+                thermo_bearing.level8.visible = (value >=8)
+                thermo_bearing.level9.visible = (value >=9)
+                thermo_bearing.level10.visible = (value >=10)
+                thermo_bearing.level11.visible = (value >=11)
+                thermo_bearing.level12.visible = (value >=12)
+                thermo_bearing.level13.visible = (value >=13)
+                thermo_bearing.level14.visible = (value >=14)
+                thermo_bearing.level15.visible = (value >=15)
+                thermo_bearing.level16.visible = (value >=16)
+                thermo_bearing.level17.visible = (value >=17)
+                thermo_bearing.level18.visible = (value >=18)
+                thermo_bearing.level19.visible = (value >=19)
+                thermo_bearing.level20.visible = (value >=20)
+                thermo_bearing.level21.visible = (value >=21)
+                thermo_bearing.level22.visible = (value >=22)
+                thermo_bearing.level23.visible = (value >=23)
+                thermo_bearing.level24.visible = (value >=24)
+                thermo_bearing.level25.visible = (value >=25)
+                thermo_bearing.level26.visible = (value >=26)
+                thermo_bearing.level27.visible = (value >=27)
+                thermo_bearing.level28.visible = (value >=28)
+                thermo_bearing.level29.visible = (value >=29)
+                thermo_bearing.level30.visible = (value >=30)
+                thermo_bearing.level31.visible = (value >=31)
+                thermo_bearing.level32.visible = (value >=32)
+                thermo_bearing.level33.visible = (value >=33)
+                thermo_bearing.level34.visible = (value >=34)
+                thermo_bearing.level35.visible = (value >=35)
+                thermo_bearing.level36.visible = (value >=36)
+                thermo_bearing.level37.visible = (value >=37)
+                thermo_bearing.level38.visible = (value >=38)
+                thermo_bearing.level39.visible = (value >=39)
+                thermo_bearing.level40.visible = (value >=40)
+                thermo_bearing.level41.visible = (value >=41)
+                thermo_bearing.level42.visible = (value >=42)
+                thermo_bearing.level43.visible = (value >=43)
+                thermo_bearing.level44.visible = (value >=44)
+                thermo_bearing.level45.visible = (value >=45)
+                thermo_bearing.level46.visible = (value >=46)
+                thermo_bearing.level47.visible = (value >=47)
+                thermo_bearing.level48.visible = (value >=48)
+                thermo_bearing.level49.visible = (value >=49)
+                thermo_bearing.level50.visible = (value >=50)
+                thermo_bearing.level51.visible = (value >=51)
+                thermo_bearing.level52.visible = (value >=52)
+                thermo_bearing.level53.visible = (value >=53)
+                thermo_bearing.level54.visible = (value >=54)
+                thermo_bearing.level55.visible = (value >=55)
+                thermo_bearing.level56.visible = (value >=56)
+                thermo_bearing.level57.visible = (value >=57)
+                thermo_bearing.level58.visible = (value >=58)
+                thermo_bearing.level59.visible = (value >=59)
+                thermo_bearing.level60.visible = (value >=60)
+                thermo_bearing.level61.visible = (value >=61)
+                thermo_bearing.level62.visible = (value >=62)
+                thermo_bearing.level63.visible = (value >=63)
+                thermo_bearing.level64.visible = (value >=64)
+                thermo_bearing.level65.visible = (value >=65)
+                thermo_bearing.level66.visible = (value >=66)
+                thermo_bearing.level67.visible = (value >=67)
+                thermo_bearing.level68.visible = (value >=68)
+                thermo_bearing.level69.visible = (value >=69)
+                thermo_bearing.level70.visible = (value >=70)
+                thermo_bearing.level71.visible = (value >=71)
+                thermo_bearing.level72.visible = (value >=72)
+                thermo_bearing.level73.visible = (value >=73)
+                thermo_bearing.level74.visible = (value >=74)
+                thermo_bearing.level75.visible = (value >=75)
+                thermo_bearing.level76.visible = (value >=76)
+                thermo_bearing.level77.visible = (value >=77)
+                thermo_bearing.level78.visible = (value >=78)
+                thermo_bearing.level79.visible = (value >=79)
+                thermo_bearing.level80.visible = (value >=80)
+                thermo_bearing.level81.visible = (value >=81)
+                thermo_bearing.level82.visible = (value >=82)
+                thermo_bearing.level83.visible = (value >=83)
+                thermo_bearing.level84.visible = (value >=84)
+                thermo_bearing.level85.visible = (value >=85)
+                thermo_bearing.level86.visible = (value >=86)
+                thermo_bearing.level87.visible = (value >=87)
+                thermo_bearing.level88.visible = (value >=88)
+                thermo_bearing.level89.visible = (value >=89)
+                thermo_bearing.level90.visible = (value >=90)
+                thermo_bearing.level91.visible = (value >=91)
+                thermo_bearing.level92.visible = (value >=92)
+                thermo_bearing.level93.visible = (value >=93)
+                thermo_bearing.level94.visible = (value >=94)
+                thermo_bearing.level95.visible = (value >=95)
+                thermo_bearing.level96.visible = (value >=96)
+                thermo_bearing.level97.visible = (value >=97)
+                thermo_bearing.level98.visible = (value >=98)
+                thermo_bearing.level99.visible = (value >=99)
+                thermo_bearing.level100.visible = (value >=100)
+
+
+            }
+        }
+    }
 
     AccelerometerHandler {
         id: accelxHandler
@@ -21,18 +263,25 @@ ApplicationWindow {
 
     }
 
+
     SerialPortHandler {
         id: serialPortHandler
+        signal changeToGreen()
+        signal changeToYellow()
+        signal changeToRed()
         onNewPortDetected: serialPortsComboBox.addPort(portName)
         onNewTemperatureData: function(widgetNum, value) {
             if(widgetNum === 0) {
                 thermometer_bearing_1.tempValue(value)
+                changeToGreen()
             }
             else if(widgetNum === 1) {
                 thermometer_bearing_2.tempValue(value)
+                changeToYellow()
             }
             else if(widgetNum === 2) {
                 thermometer_bearing_3.tempValue(value)
+                changeToRed()
             }
         }
 
@@ -56,13 +305,13 @@ ApplicationWindow {
 
         onNewLEDData: function(widgetNum, value) {
             if(widgetNum === 0) {
-                led_bearing_1.setState(value)
+                led_ir_bearing.setState(value)
             }
             else if(widgetNum === 1) {
-                led_bearing_2.setState(value)
+                led_therm_bearing.setState(value)
             }
             else if(widgetNum === 2) {
-                led_tube_1.setState(value)
+                led_roller.setState(value)
             }
             else if(widgetNum === 3) {
                 led_shock_1.setState(value)
@@ -72,496 +321,317 @@ ApplicationWindow {
     }
 
 
-    Image {
-        id: thermometer_bearing_1
-        width: 250
-        height: 250
-        anchors.top: parent.top
-        anchors.topMargin: 25
-        anchors.left: parent.left
-        anchors.leftMargin: 25
-        fillMode: Image.PreserveAspectFit
-        source: "Images/Thermometer Background.png"
-
-        Image {
-            id: thermometer_first_level_1
-            anchors.fill: parent
-            fillMode: Image.PreserveAspectFit
-            source: "Images/Thermometer first_level.png"
-
-            ColumnLayout {
-                y: 189
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                spacing: 0
-
-                Text {
-                    id: thermo_value_1
-                    color: "#eae6e6"
-                    text: qsTr("100")
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 17
-                    Layout.preferredWidth: 41
-                    lineHeight: 0
-                    verticalAlignment: Text.AlignVCenter
-                    font.family: "Courier"
-                    horizontalAlignment: Text.AlignHCenter
-                    fontSizeMode: Text.Fit
-                    font.pointSize: 20
-                    font.bold: true
-                }
-
-                ColumnLayout {
-                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    spacing: 0
-
-                    Text {
-                        id: degree_1
-                        color: "#eae6e6"
-                        text: qsTr("o")
-                        Layout.preferredHeight: 11
-                        Layout.preferredWidth: 22
-                        lineHeight: 1
-                        verticalAlignment: Text.AlignVCenter
-                        font.family: "Courier"
-                        wrapMode: Text.WrapAnywhere
-                        horizontalAlignment: Text.AlignLeft
-                        fontSizeMode: Text.Fit
-                        font.pointSize: 10
-                        font.bold: true
-                    }
-
-                    Text {
-                        id: thermo_unit_1
-                        color: "#eae6e6"
-                        text: qsTr("C")
-                        Layout.preferredHeight: 17
-                        Layout.preferredWidth: 22
-                        renderType: Text.NativeRendering
-                        wrapMode: Text.WrapAnywhere
-                        lineHeight: 0
-                        font.family: "Courier"
-                        verticalAlignment: Text.AlignVCenter
-                        horizontalAlignment: Text.AlignHCenter
-                        fontSizeMode: Text.Fit
-                        font.pointSize: 50
-                        font.bold: true
-                    }
-                }
-            }
-        }
-
-        Image {
-            id: thermometer_second_level_1
-            visible: false
-            anchors.fill: parent
-            fillMode: Image.PreserveAspectFit
-            source: "Images/Thermometer second_level.png"
-        }
-
-        Image {
-            id: thermometer_third_level_1
-            visible: false
-            anchors.fill: parent
-            fillMode: Image.PreserveAspectFit
-            source: "Images/Thermometer third_level.png"
-        }
-
-        Image {
-            id: thermometer_fourth_level_1
-            visible: false
-            anchors.fill: parent
-            fillMode: Image.PreserveAspectFit
-            source: "Images/Thermometer fourth_level.png"
-        }
-
-        Image {
-            id: thermometer_fifth_level_1
-            visible: false
-            anchors.fill: parent
-            fillMode: Image.PreserveAspectFit
-            source: "Images/Thermometer fifth_level.png"
-        }
-
-        Image {
-            id: thermometer_sixth_level_1
-            visible: false
-            anchors.fill: parent
-            fillMode: Image.PreserveAspectFit
-            source: "Images/Thermometer sixth_level.png"
-        }
 
 
-        function tempValue(value) {
-            //console.log("Value:" + value)
-            thermo_value_1.text = value;
 
-            thermometer_second_level_1.visible = (value >= 20);
-            thermometer_third_level_1.visible = (value >= 30);
-            thermometer_fourth_level_1.visible = (value >= 40);
-            thermometer_fifth_level_1.visible = (value >= 50);
-            thermometer_sixth_level_1.visible = (value >= 60);
-        }
-    }
 
-    Image {
-        id: thermometer_bearing_2
-        x: 7
-        y: -6
-        width: 250
-        height: 250
+
+
+
+
+    StatusLED {
+        id: bearing_status_0
+        y: 170
+        width: (parent.height - 20)/3
+        height: width
+        anchors.left: accel_y_background.right
+        anchors.leftMargin: 5
         anchors.verticalCenter: parent.verticalCenter
-        fillMode: Image.PreserveAspectFit
-        Image {
-            id: thermometer_first_level_2
-            fillMode: Image.PreserveAspectFit
-            anchors.fill: parent
-            ColumnLayout {
-                y: 189
-                Text {
-                    id: thermo_value_2
-                    color: "#eae6e6"
-                    text: qsTr("100")
-                    lineHeight: 0
-                    font.bold: true
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    Layout.preferredWidth: 41
-                    Layout.fillWidth: true
-                    verticalAlignment: Text.AlignVCenter
-                    fontSizeMode: Text.Fit
-                    font.pointSize: 20
-                    font.family: "Courier"
-                    horizontalAlignment: Text.AlignHCenter
-                    Layout.preferredHeight: 17
+        top_title.text: qsTr("Bearing 1")
+
+    }
+
+    Rectangle {
+        id: accel_x_background
+        width: parent.width - 20 - (height*2)
+        height: (parent.height - 20)/3
+        color: "#2c2a2a"
+        anchors.bottom: accel_y_background.top
+        anchors.bottomMargin: 5
+        border.color: "#2c2a2a"
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        Item {
+            id: accelx_item
+
+            ChartView {
+                ValueAxis {
+                    id: accelX_xAxis
+                    min: 0
+                    max: 5
                 }
 
-                ColumnLayout {
-                    Text {
-                        id: degree_2
-                        color: "#eae6e6"
-                        text: qsTr("o")
-                        lineHeight: 1
-                        font.bold: true
-                        Layout.preferredWidth: 22
-                        wrapMode: Text.WrapAnywhere
-                        verticalAlignment: Text.AlignVCenter
-                        fontSizeMode: Text.Fit
-                        font.pointSize: 10
-                        font.family: "Courier"
-                        horizontalAlignment: Text.AlignLeft
-                        Layout.preferredHeight: 11
-                    }
-
-                    Text {
-                        id: thermo_unit_2
-                        color: "#eae6e6"
-                        text: qsTr("C")
-                        lineHeight: 0
-                        font.bold: true
-                        Layout.preferredWidth: 22
-                        wrapMode: Text.WrapAnywhere
-                        renderType: Text.NativeRendering
-                        verticalAlignment: Text.AlignVCenter
-                        fontSizeMode: Text.Fit
-                        font.pointSize: 50
-                        font.family: "Courier"
-                        horizontalAlignment: Text.AlignHCenter
-                        Layout.preferredHeight: 17
-                    }
-                    spacing: 0
-                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                ValueAxis {
+                    id: accelX_yAxis
+                    min: 0.0
+                    max: 5.0
                 }
-                spacing: 0
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
-                anchors.right: parent.right
-                anchors.left: parent.left
+
+                objectName: "AccelX_Chart"
+                id:accelx_chart
+                width: parent.width
+                height: parent.height
+                anchors.fill: parent
+                animationOptions: ChartView.SeriesAnimations
+                backgroundColor: "#000d0d0d"
+                antialiasing: true
+                legend.visible: false
+                margins.bottom: 0
+                margins.top: 0
+                margins.left: 0
+                margins.right: 0
+
+                LineSeries {
+                    id: accelx_series
+                    /*name: "Accel X"*/
+                    color: "#ffff0000"
+                }
             }
-            source: "Images/Thermometer first_level.png"
+
+
+            property real largestY:0.0;
+            width: parent.width
+            height: parent.height - accel_x_label.height
+            anchors.top: accel_x_label.bottom
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.topMargin: 5
+
+            function add_value(x) {
+                if(x >= largestY) {
+                    largestY = x
+                }
+
+
+
+                //console.log("Point(" + accelx_series.count + "," + x + ")");
+                accelx_series.append(accelx_series.count,x)
+
+                accelX_xAxis.min = accelx_series.count - 5
+                accelX_xAxis.max = accelx_series.count
+
+                accelX_yAxis.min = 0
+                accelX_yAxis.max = largestY
+
+                accelx_chart.setAxisX(accelX_xAxis, accelx_series)
+                accelx_chart.setAxisY(accelX_yAxis, accelx_series)
+                //accelx_chart.update()
+            }
         }
 
-        Image {
-            id: thermometer_second_level_2
-            fillMode: Image.PreserveAspectFit
-            anchors.fill: parent
-            visible: false
-            source: "Images/Thermometer second_level.png"
-        }
-
-        Image {
-            id: thermometer_third_level_2
-            fillMode: Image.PreserveAspectFit
-            anchors.fill: parent
-            visible: false
-            source: "Images/Thermometer third_level.png"
-        }
-
-        Image {
-            id: thermometer_fourth_level_2
-            fillMode: Image.PreserveAspectFit
-            anchors.fill: parent
-            visible: false
-            source: "Images/Thermometer fourth_level.png"
-        }
-
-        Image {
-            id: thermometer_fifth_level_2
-            fillMode: Image.PreserveAspectFit
-            anchors.fill: parent
-            visible: false
-            source: "Images/Thermometer fifth_level.png"
-        }
-
-        Image {
-            id: thermometer_sixth_level_2
-            fillMode: Image.PreserveAspectFit
-            anchors.fill: parent
-            visible: false
-            source: "Images/Thermometer sixth_level.png"
-        }
-        anchors.leftMargin: 25
-        source: "Images/Thermometer Background.png"
-        anchors.left: parent.left
-
-        function tempValue(value) {
-            //console.log("Value:" + value)
-            thermo_value_2.text = value;
-
-            thermometer_second_level_2.visible = (value >= 20);
-            thermometer_third_level_2.visible = (value >= 30);
-            thermometer_fourth_level_2.visible = (value >= 40);
-            thermometer_fifth_level_2.visible = (value >= 50);
-            thermometer_sixth_level_2.visible = (value >= 60);
+        Text {
+            id: accel_x_label
+            height: parent.height*0.10
+            color: "#ffffff"
+            text: qsTr("Accel X")
+            font.pixelSize: 12 + (12*((height - 15)/15))
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
         }
     }
 
-    Image {
-        id: thermometer_bearing_3
-        x: 7
-        y: -9
-        width: 250
-        height: 250
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 25
-        fillMode: Image.PreserveAspectFit
-        Image {
-            id: thermometer_first_level_3
-            fillMode: Image.PreserveAspectFit
-            anchors.fill: parent
-            ColumnLayout {
-                y: 189
-                Text {
-                    id: thermo_value_3
-                    color: "#eae6e6"
-                    text: qsTr("100")
-                    font.bold: true
-                    lineHeight: 0
-                    Layout.preferredWidth: 41
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    Layout.fillWidth: true
-                    verticalAlignment: Text.AlignVCenter
-                    fontSizeMode: Text.Fit
-                    font.pointSize: 20
-                    font.family: "Courier"
-                    horizontalAlignment: Text.AlignHCenter
-                    Layout.preferredHeight: 17
+    Rectangle {
+        id: accel_y_background
+        width: parent.width - 20 - (height*2)
+        height: (parent.height - 20)/3
+        color: "#2c2a2a"
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        border.color: "#2c2a2a"
+
+        Item {
+            id: accely_item
+            x: 0
+            y: 20
+            width: parent.width
+            height: parent.height - accel_y_label.height
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 0
+            anchors.top: accel_y_label.bottom
+            anchors.topMargin: 5
+            anchors.horizontalCenter: parent.horizontalCenter
+
+
+            property real largestY:0.0;
+
+            function add_value(x) {
+                if(x >= largestY) {
+                    largestY = x
                 }
 
-                ColumnLayout {
-                    Text {
-                        id: degree_3
-                        color: "#eae6e6"
-                        text: qsTr("o")
-                        font.bold: true
-                        lineHeight: 1
-                        wrapMode: Text.WrapAnywhere
-                        Layout.preferredWidth: 22
-                        verticalAlignment: Text.AlignVCenter
-                        fontSizeMode: Text.Fit
-                        font.pointSize: 10
-                        font.family: "Courier"
-                        horizontalAlignment: Text.AlignLeft
-                        Layout.preferredHeight: 11
-                    }
+                //console.log("Point(" + accely_series.count + "," + x + ")");
+                accely_series.append(accely_series.count,x)
 
-                    Text {
-                        id: thermo_unit_3
-                        color: "#eae6e6"
-                        text: qsTr("C")
-                        font.bold: true
-                        lineHeight: 0
-                        wrapMode: Text.WrapAnywhere
-                        Layout.preferredWidth: 22
-                        renderType: Text.NativeRendering
-                        verticalAlignment: Text.AlignVCenter
-                        fontSizeMode: Text.Fit
-                        font.pointSize: 50
-                        font.family: "Courier"
-                        horizontalAlignment: Text.AlignHCenter
-                        Layout.preferredHeight: 17
-                    }
-                    spacing: 0
-                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                accelY_xAxis.min = accely_series.count - 5
+                accelY_xAxis.max = accely_series.count
+                accelY_yAxis.min = 0
+                accelY_yAxis.max = largestY
+
+                accely_chart.setAxisX(accelY_xAxis, accely_series)
+                accely_chart.setAxisY(accelY_yAxis, accely_series)
+
+            }
+            ChartView {
+                ValueAxis {
+                    id: accelY_xAxis
+                    min: 0
+                    max: 5
                 }
-                spacing: 0
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
-                anchors.left: parent.left
-                anchors.right: parent.right
-            }
-            source: "Images/Thermometer first_level.png"
-        }
 
-        Image {
-            id: thermometer_second_level_3
-            fillMode: Image.PreserveAspectFit
-            anchors.fill: parent
-            visible: false
-            source: "Images/Thermometer second_level.png"
-        }
+                ValueAxis {
+                    id: accelY_yAxis
+                    min: 0
+                    max: 5
+                }
 
-        Image {
-            id: thermometer_third_level_3
-            fillMode: Image.PreserveAspectFit
-            anchors.fill: parent
-            visible: false
-            source: "Images/Thermometer third_level.png"
-        }
+                objectName: "AccelY_Chart"
+                id:accely_chart
+                width: parent.width
+                height: parent.height
+                anchors.fill: parent
+                animationOptions: ChartView.SeriesAnimations
+                backgroundColor: "#000d0d0d"
+                legend.visible: false
+                antialiasing: true
+                margins.bottom: 0
+                margins.top: 0
+                margins.left: 0
+                margins.right: 0
 
-        Image {
-            id: thermometer_fourth_level_3
-            fillMode: Image.PreserveAspectFit
-            anchors.fill: parent
-            visible: false
-            source: "Images/Thermometer fourth_level.png"
-        }
-
-        Image {
-            id: thermometer_fifth_level_3
-            fillMode: Image.PreserveAspectFit
-            anchors.fill: parent
-            visible: false
-            source: "Images/Thermometer fifth_level.png"
-        }
-
-        Image {
-            id: thermometer_sixth_level_3
-            fillMode: Image.PreserveAspectFit
-            anchors.fill: parent
-            visible: false
-            source: "Images/Thermometer sixth_level.png"
-        }
-        source: "Images/Thermometer Background.png"
-        anchors.leftMargin: 25
-        anchors.left: parent.left
-
-        function tempValue(value) {
-            //console.log("Value:" + value)
-            thermo_value_3.text = value;
-
-            thermometer_second_level_3.visible = (value >= 20);
-            thermometer_third_level_3.visible = (value >= 30);
-            thermometer_fourth_level_3.visible = (value >= 40);
-            thermometer_fifth_level_3.visible = (value >= 50);
-            thermometer_sixth_level_3.visible = (value >= 60);
-        }
-    }
-
-    Image {
-        id: gyro
-        x: 1042
-        width: 360
-        height: 360
-        anchors.right: parent.right
-        anchors.rightMargin: 25
-        anchors.top: parent.top
-        anchors.topMargin: 25
-        fillMode: Image.PreserveAspectFit
-        source: "Images/Analog Meter Background.png"
-
-        Image {
-            id: gyro_needle
-            rotation: -3
-            anchors.fill: parent
-            fillMode: Image.PreserveAspectFit
-            source: "Images/Analog Meter Needle.png"
-        }
-
-        Image {
-            id: gyro_inner
-            width: 480
-            height: 480
-            anchors.fill: parent
-            fillMode: Image.PreserveAspectFit
-            source: "Images/Analog Meter Inner.png"
-
-            Text {
-                id: rpm_value
-                x: 177
-                y: 192
-                width: 126
-                height: 54
-                color: "#c5bebe"
-                text: qsTr("0")
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-                lineHeight: 8
-                wrapMode: Text.NoWrap
-                font.pointSize: 30
-                fontSizeMode: Text.FixedSize
-                font.weight: Font.Bold
-                textFormat: Text.PlainText
-                font.bold: true
-                font.family: "Courier"
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-            }
-
-            Text {
-                id: rpm_unit
-                height: 25
-                color: "#c5bebe"
-                text: qsTr("RPM")
-                anchors.right: rpm_value.right
-                anchors.rightMargin: 0
-                anchors.left: rpm_value.left
-                anchors.leftMargin: 0
-                anchors.top: rpm_value.bottom
-                anchors.topMargin: 0
-                font.pointSize: 30
-                wrapMode: Text.NoWrap
-                renderType: Text.QtRendering
-                lineHeight: 0.8
-                verticalAlignment: Text.AlignVCenter
-                font.family: "Courier"
-                horizontalAlignment: Text.AlignHCenter
-                font.bold: true
+                LineSeries {
+                    id: accely_series
+                    name: "Accel Y"
+                    color: "#ff00ff00"
+                }
             }
         }
 
-        function needleValue(value) {
-            //console.log("Rotation:" + value)
-            gyro_needle.rotation = value * 1
-            rpm_value.text = value
+        Text {
+            id: accel_y_label
+            width: parent.width
+            height: parent.height*0.10
+            color: "#ffffff"
+            text: qsTr("Accel Y")
+            font.pixelSize: 12 + (12*((height - 15)/15))
+            anchors.leftMargin: 0
+            anchors.left: parent.left
+            anchors.rightMargin: 0
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            anchors.right: parent.right
         }
+
+
+
     }
 
 
+    Rectangle {
+        id: accel_z_background
+        width: parent.width - 20 - (height*2)
+        height: (parent.height - 20)/3
+        color: "#2c2a2a"
+        anchors.top: accel_y_background.bottom
+        anchors.topMargin: 5
+        anchors.horizontalCenter: parent.horizontalCenter
+        border.color: "#2c2a2a"
+
+        Item {
+            id: accelz_item
+            x: 0
+            width: parent.width
+            height: parent.height - accel_z_label.height
+            anchors.top: accel_z_label.bottom
+            anchors.topMargin: 5
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 0
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            ChartView {
+                ValueAxis {
+                    id: accelZ_xAxis
+                    min: 0
+                    max: 5
+                }
+
+                ValueAxis {
+                    id: accelZ_yAxis
+                    min: 0
+                    max: 5
+                }
+
+                objectName: "AccelZ_Chart"
+                id:accelz_chart
+                width: parent.width
+                height: parent.height
+                anchors.fill: parent
+                animationOptions: ChartView.SeriesAnimations
+                backgroundColor: "#000d0d0d"
+                legend.visible: false
+                antialiasing: true
+                margins.bottom: 0
+                margins.top: 0
+                margins.left: 0
+                margins.right: 0
+
+                LineSeries {
+                    id: accelz_series
+                    name: "Accel Z"
+                    color: "#ff0000ff"
+                }
+            }
+
+            property real largestY:0.0;
+
+            function add_value(x) {
+                if(x >= largestY) {
+                    largestY = x
+                }
+
+                //console.log("Point(" + accely_series.count + "," + x + ")");
+                accelz_series.append(accelz_series.count,x)
+
+                accelZ_xAxis.min = accelz_series.count - 5
+                accelZ_xAxis.max = accelz_series.count
+                accelZ_yAxis.min = 0
+                accelZ_yAxis.max = largestY
+
+                accelz_chart.setAxisX(accelZ_xAxis, accelz_series)
+                accelz_chart.setAxisY(accelZ_yAxis, accelz_series)
+
+            }
+        }
+
+        Text {
+            id: accel_z_label
+            height: parent.height*0.10
+            color: "#ffffff"
+            text: qsTr("Accel Z")
+            font.pixelSize: 12 + (12*((height - 15)/15))
+            anchors.leftMargin: 0
+            anchors.left: parent.left
+            anchors.rightMargin: 0
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            anchors.right: parent.right
+        }
+    }
 
 
 
     Slider {
         id: slider
-        x: 67
-        y: 1076
+        x: 14
+        y: 719
         stepSize: 1
         to: 100
         snapMode: Slider.SnapAlways
         from: 0
-        value: 0
 
         onValueChanged: thermometer_bearing_1.tempValue(value)
 
@@ -569,16 +639,17 @@ ApplicationWindow {
     }
 
 
-    Connections {
-        target: slider
-        onMoved: print("clicked")
-    }
+
+
+
+
+
 
 
     Slider {
         id: slider1
-        x: 984
-        y: 1076
+        x: 22
+        y: 765
         stepSize: 1
         snapMode: Slider.SnapAlways
         to: 300
@@ -589,189 +660,35 @@ ApplicationWindow {
     }
 
 
-    Item {
-        id: accelx_item
-        x: 400
-        width: 360
-        height: 360
-        anchors.top: parent.top
-        anchors.topMargin: 25
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        ChartView {
-            ValueAxis {
-                id: accelX_xAxis
-                min: 0
-                max: 5
-            }
-
-            ValueAxis {
-                id: accelX_yAxis
-                min: 0.0
-                max: 5.0
-            }
-
-            objectName: "AccelX_Chart"
-            id:accelx_chart
-            anchors.fill: parent
-            animationOptions: ChartView.SeriesAnimations
-            backgroundColor: "#000d0d0d"
-            antialiasing: true
-
-            LineSeries {
-                id: accelx_series
-                name: "Accel X"
-                color: "#ffff0000"
-            }
-        }
-
-
-        property real largestY:0.0;
-
-        function add_value(x) {
-            if(x >= largestY) {
-                largestY = x
-            }
 
 
 
-            //console.log("Point(" + accelx_series.count + "," + x + ")");
-            accelx_series.append(accelx_series.count,x)
-
-            accelX_xAxis.min = accelx_series.count - 5
-            accelX_xAxis.max = accelx_series.count
-
-            accelX_yAxis.min = 0
-            accelX_yAxis.max = largestY
-
-            accelx_chart.setAxisX(accelX_xAxis, accelx_series)
-            accelx_chart.setAxisY(accelX_yAxis, accelx_series)
-            //accelx_chart.update()
-        }
-    }
 
 
-    Item {
-        id: accely_item
-        x: 400
-        y: 280
-        width: 360
-        height: 360
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        ChartView {
-            ValueAxis {
-                id: accelY_xAxis
-                min: 0
-                max: 5
-            }
-
-            ValueAxis {
-                id: accelY_yAxis
-                min: 0
-                max: 5
-            }
-
-            objectName: "AccelY_Chart"
-            id:accely_chart
-            anchors.fill: parent
-            animationOptions: ChartView.SeriesAnimations
-            backgroundColor: "#000d0d0d"
-
-            antialiasing: true
-
-            LineSeries {
-                id: accely_series
-                name: "Accel Y"
-                color: "#ff00ff00"
-            }
-        }
-
-        property real largestY:0.0;
-
-        function add_value(x) {
-            if(x >= largestY) {
-                largestY = x
-            }
-
-            //console.log("Point(" + accely_series.count + "," + x + ")");
-            accely_series.append(accely_series.count,x)
-
-            accelY_xAxis.min = accely_series.count - 5
-            accelY_xAxis.max = accely_series.count
-            accelY_yAxis.min = 0
-            accelY_yAxis.max = largestY
-
-            accely_chart.setAxisX(accelY_xAxis, accely_series)
-            accely_chart.setAxisY(accelY_yAxis, accely_series)
-
-        }
-    }
 
 
-    Item {
-        id: accelz_item
-        x: 400
-        y: 590
-        width: 360
-        height: 360
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 25
-        anchors.horizontalCenter: parent.horizontalCenter
 
-        ChartView {
-            ValueAxis {
-                id: accelZ_xAxis
-                min: 0
-                max: 5
-            }
 
-            ValueAxis {
-                id: accelZ_yAxis
-                min: 0
-                max: 5
-            }
 
-            objectName: "AccelY_Chart"
-            id:accelz_chart
-            anchors.fill: parent
-            animationOptions: ChartView.SeriesAnimations
-            backgroundColor: "#000d0d0d"
 
-            antialiasing: true
 
-            LineSeries {
-                id: accelz_series
-                name: "Accel Z"
-                color: "#ff0000ff"
-            }
-        }
 
-        property real largestY:0.0;
 
-        function add_value(x) {
-            if(x >= largestY) {
-                largestY = x
-            }
 
-            //console.log("Point(" + accely_series.count + "," + x + ")");
-            accelz_series.append(accelz_series.count,x)
 
-            accelZ_xAxis.min = accelz_series.count - 5
-            accelZ_xAxis.max = accelz_series.count
-            accelZ_yAxis.min = 0
-            accelZ_yAxis.max = largestY
 
-            accelz_chart.setAxisX(accelZ_xAxis, accelz_series)
-            accelz_chart.setAxisY(accelZ_yAxis, accelz_series)
 
-        }
-    }
 
 
     RowLayout {
     }
+
+
+
+
+
+
+
 
 
 
@@ -793,231 +710,19 @@ ApplicationWindow {
 
     }
 
-    GridLayout {
-        x: 766
-        width: 360
-        height: 295
-        anchors.top: gyro.bottom
-        anchors.topMargin: 5
-        anchors.right: parent.right
-        anchors.rightMargin: 25
-        columnSpacing: 50
-        rowSpacing: 6
-        anchors.verticalCenter: parent.verticalCenter
-        rows: 1
-        columns: 2
-
-        ColumnLayout {
-            spacing: 0
-
-            Item {
-                id: led_bearing_1
-                width: 60
-                height: 60
-                Layout.preferredHeight: 80
-                Layout.preferredWidth: 80
-
-                Image {
-                    id: led_bearing_off_1
-                    anchors.fill: parent
-                    sourceSize.height: 800
-                    mipmap: true
-                    sourceSize.width: 800
-                    Layout.preferredWidth: 80
-                    source: "Images/LED red.png"
-                    fillMode: Image.PreserveAspectFit
-                    Layout.preferredHeight: 80
-                }
-
-                Image {
-                    id: led_bearing_on_1
-                    width: 80
-                    height: 80
-                    anchors.rightMargin: 0
-                    anchors.bottomMargin: 0
-                    anchors.fill: parent
-                    Layout.preferredHeight: 80
-                    Layout.preferredWidth: 80
-                    sourceSize.height: 800
-                    sourceSize.width: 800
-                    fillMode: Image.PreserveAspectFit
-                    source: "Images/LED green.svg"
-                    mipmap: true
 
 
-                }
 
-                function setState(state) {
-                    led_bearing_on_1.visible = (state > 0)
-                    led_bearing_off_1.visible = (state <= 0)
-                }
 
-            }
 
-            Item {
-                id: led_bearing_2
-                width: 60
-                height: 60
-                Layout.preferredHeight: 80
-                Layout.preferredWidth: 80
-                Image {
-                    id: led_bearing_off_2
-                    mipmap: true
-                    sourceSize.height: 800
-                    sourceSize.width: 800
-                    Layout.preferredWidth: 80
-                    source: "Images/LED red.png"
-                    fillMode: Image.PreserveAspectFit
-                    anchors.fill: parent
-                    Layout.preferredHeight: 80
-                }
 
-                Image {
-                    id: led_bearing_on_2
-                    sourceSize.height: 800
-                    mipmap: true
-                    sourceSize.width: 800
-                    Layout.preferredWidth: 80
-                    source: "Images/LED green.svg"
-                    fillMode: Image.PreserveAspectFit
-                    anchors.fill: parent
-                    Layout.preferredHeight: 80
-                }
 
-                function setState(state) {
-                    led_bearing_on_2.visible = (state > 0)
-                    led_bearing_off_2.visible = (state <= 0)
-                }
-            }
 
-            Item {
-                id: led_tube_1
-                width: 60
-                height: 60
-                Layout.preferredHeight: 80
-                Layout.preferredWidth: 80
-                Image {
-                    id: led_tube_off_1
-                    sourceSize.height: 800
-                    mipmap: true
-                    sourceSize.width: 800
-                    Layout.preferredWidth: 80
-                    source: "Images/LED red.png"
-                    fillMode: Image.PreserveAspectFit
-                    anchors.fill: parent
-                    Layout.preferredHeight: 80
-                }
 
-                Image {
-                    id: led_tube_on_1
-                    mipmap: true
-                    sourceSize.height: 800
-                    sourceSize.width: 800
-                    Layout.preferredWidth: 80
-                    source: "Images/LED green.svg"
-                    fillMode: Image.PreserveAspectFit
-                    anchors.fill: parent
-                    Layout.preferredHeight: 80
-                }
 
-                function setState(state) {
-                    led_tube_on_1.visible = (state > 0)
-                    led_tube_off_1.visible = (state <= 0)
-                }
-            }
 
-            Item {
-                id: led_shock_1
-                width: 60
-                height: 60
-                Layout.preferredHeight: 80
-                Layout.preferredWidth: 80
-                Image {
-                    id: led_shock_off_1
-                    mipmap: true
-                    sourceSize.height: 800
-                    sourceSize.width: 800
-                    Layout.preferredWidth: 80
-                    source: "Images/LED red.png"
-                    fillMode: Image.PreserveAspectFit
-                    anchors.fill: parent
-                    Layout.preferredHeight: 80
-                }
 
-                Image {
-                    id: led_shock_on_1
-                    sourceSize.height: 800
-                    mipmap: true
-                    sourceSize.width: 800
-                    Layout.preferredWidth: 80
-                    source: "Images/LED green.svg"
-                    fillMode: Image.PreserveAspectFit
-                    anchors.fill: parent
-                    Layout.preferredHeight: 80
-                }
 
-                function setState(state) {
-                    led_shock_on_1.visible = (state > 0)
-                    led_shock_off_1.visible = (state <= 0)
-                }
-            }
-        }
-
-        ColumnLayout {
-
-            Label {
-                id: led_label_bearing_1
-                width: 120
-                color: "#6f7479"
-                text: qsTr("Bearing 1")
-                Layout.preferredHeight: 80
-                Layout.preferredWidth: 200
-                font.bold: true
-                font.pixelSize: 20
-                font.family: "Courier"
-                verticalAlignment: Text.AlignVCenter
-            }
-
-            Label {
-                id: led_label_bearing_2
-                width: 120
-                color: "#6f7479"
-                text: qsTr("Bearing 2")
-                Layout.preferredHeight: 80
-                Layout.preferredWidth: 200
-                font.bold: true
-                verticalAlignment: Text.AlignVCenter
-                font.family: "Courier"
-                font.pixelSize: 20
-            }
-
-            Label {
-                id: led_tube_bearing_1
-                width: 120
-                color: "#6f7479"
-                text: qsTr("Tube")
-                Layout.preferredHeight: 80
-                Layout.preferredWidth: 200
-                font.bold: true
-                verticalAlignment: Text.AlignVCenter
-                font.family: "Courier"
-                font.pixelSize: 20
-            }
-
-            Label {
-                id: led_label_shock_1
-                width: 120
-                color: "#6f7479"
-                text: qsTr("Shock")
-                Layout.preferredHeight: 80
-                Layout.preferredWidth: 200
-                font.bold: true
-                verticalAlignment: Text.AlignVCenter
-                font.family: "Courier"
-                font.pixelSize: 20
-            }
-        }
-    }
 
     RowLayout {
         x: 14
@@ -1096,7 +801,136 @@ ApplicationWindow {
                 serialPortHandler.startSerialPort()
             }
         }
+
+
     }
+
+    Rectangle {
+        id: thermo_bearing_background_2
+        x: 3
+        y: 7
+        width: (parent.height - 20)/3
+        height: width
+        color: "#2c2a2a"
+        anchors.verticalCenter: parent.verticalCenter
+        Image {
+            id: thermometer_bearing_2
+            width: parent.width
+            height: parent.height
+            Image {
+                id: thermo_level_0_2
+                width: parent.width
+                height: parent.height
+                Text {
+                    id: thermo_value_2
+                    y: (parent.height)*0.74666667
+                    width: parent.width
+                    height: (parent.height)*0.133333
+                    color: "#f1eeee"
+                    text: qsTr("100<br><sup>o</sup>C")
+                    anchors.leftMargin: 0
+                    anchors.left: parent.left
+                    anchors.rightMargin: 0
+                    font.pixelSize: 8 + (8*((parent.width-150)/150))
+                    textFormat: Text.RichText
+                    wrapMode: Text.WordWrap
+                    horizontalAlignment: Text.AlignHCenter
+                    anchors.right: parent.right
+                    font.bold: true
+                }
+                source: "Images/Thermometer Level/0-01.png"
+                mipmap: true
+                anchors.fill: parent
+                fillMode: Image.PreserveAspectFit
+            }
+
+            ThermometerLevel {
+                id: thermo_bearing1
+                width: parent.width
+                height: parent.height
+            }
+            clip: false
+            sourceSize.height: 0
+            source: "Images/Thermometer Background.png"
+            mipmap: true
+            anchors.fill: parent
+            fillMode: Image.PreserveAspectFit
+        }
+        border.color: "#2c2a2a"
+        anchors.rightMargin: 5
+        anchors.right: accel_y_background.left
+    }
+
+    Rectangle {
+        id: thermo_bearing_background_3
+        x: 11
+        width: (parent.height - 20)/3
+        height: width
+        color: "#2c2a2a"
+        anchors.top: accel_y_background.bottom
+        anchors.topMargin: 5
+        Image {
+            id: thermometer_bearing_3
+            width: parent.width
+            height: parent.height
+            Image {
+                id: thermo_level_0_3
+                width: parent.width
+                height: parent.height
+                Text {
+                    id: thermo_value_3
+                    y: (parent.height)*0.74666667
+                    width: parent.width
+                    height: (parent.height)*0.133333
+                    color: "#f1eeee"
+                    text: qsTr("100<br><sup>o</sup>C")
+                    anchors.leftMargin: 0
+                    anchors.left: parent.left
+                    anchors.rightMargin: 0
+                    font.pixelSize: 8 + (8*((parent.width-150)/150))
+                    textFormat: Text.RichText
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.WordWrap
+                    anchors.right: parent.right
+                    font.bold: true
+                }
+                source: "Images/Thermometer Level/0-01.png"
+                mipmap: true
+                anchors.fill: parent
+                fillMode: Image.PreserveAspectFit
+            }
+
+            ThermometerLevel {
+                id: thermo_bearing2
+                width: parent.width
+                height: parent.height
+            }
+            clip: false
+            sourceSize.height: 0
+            source: "Images/Thermometer Background.png"
+            mipmap: true
+            anchors.fill: parent
+            fillMode: Image.PreserveAspectFit
+        }
+        border.color: "#2c2a2a"
+        anchors.rightMargin: 5
+        anchors.right: accel_z_background.left
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1260,26 +1094,166 @@ ApplicationWindow {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*##^## Designer {
-    D{i:6;anchors_width:126;anchors_x:177;anchors_y:245}D{i:9;anchors_x:104}D{i:7;anchors_height:100;anchors_width:100;anchors_x:25;anchors_y:350}
-D{i:4;anchors_x:104}D{i:12;anchors_y:85}D{i:13;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}
-D{i:14;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:12}D{i:3;anchors_height:100;anchors_width:100;anchors_x:25;anchors_y:350}
-D{i:18;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}D{i:20;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}
-D{i:19;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:12}D{i:17;anchors_y:85}
-D{i:16;anchors_x:104}D{i:23;anchors_height:200;anchors_width:200}D{i:24;anchors_y:85}
-D{i:25;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}D{i:26;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:12}
-D{i:28;anchors_x:104}D{i:36;anchors_y:85}D{i:37;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}
-D{i:38;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:12}D{i:42;anchors_width:126;anchors_x:177;anchors_y:245}
-D{i:43;anchors_height:100;anchors_width:100;anchors_x:25;anchors_y:350}D{i:39;anchors_height:100;anchors_width:100;anchors_x:1042;anchors_y:350}
-D{i:44;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}D{i:47;anchors_height:360;anchors_width:200;anchors_y:-30}
-D{i:52;anchors_height:360;anchors_y:280}D{i:57;anchors_height:360;anchors_y:590}D{i:67;anchors_height:80;anchors_width:80;anchors_x:0;anchors_y:"-344"}
-D{i:68;anchors_height:80;anchors_width:80;anchors_x:0;anchors_y:"-430"}D{i:70;anchors_x:104;anchors_y:"-344"}
-D{i:71;anchors_x:0;anchors_y:"-430"}D{i:73;anchors_x:0;anchors_y:"-344"}D{i:74;anchors_x:0;anchors_y:"-430"}
-D{i:76;anchors_x:0;anchors_y:"-344"}D{i:77;anchors_x:0;anchors_y:"-430"}D{i:79;anchors_x:104}
-D{i:64;anchors_x:766;anchors_y:370}D{i:88;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:12}
-D{i:89;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:12}D{i:90;anchors_x:104}
-D{i:91;anchors_x:104}D{i:98;anchors_y:85}D{i:99;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}
-D{i:100;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:12}D{i:101;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:12}
-D{i:87;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}D{i:86;anchors_y:85}
+    D{i:3;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:103}D{i:5;anchors_height:150;anchors_width:150;anchors_x:45;anchors_y:"-78"}
+D{i:4;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:85}D{i:2;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}
+D{i:1;anchors_width:360;anchors_x:210;anchors_y:103}D{i:9;anchors_width:49;anchors_x:145}
+D{i:8;anchors_height:200;anchors_width:250;anchors_x:0;anchors_y:6}D{i:10;anchors_x:104}
+D{i:7;anchors_height:200;anchors_width:49;anchors_x:145;anchors_y:6}D{i:13;anchors_height:12;anchors_width:40;anchors_x:480;anchors_y:85}
+D{i:17;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:25}D{i:18;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}
+D{i:16;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}D{i:15;anchors_height:150;anchors_width:250;anchors_x:0;anchors_y:0}
+D{i:20;anchors_width:300}D{i:24;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}
+D{i:25;anchors_height:200;anchors_width:200;anchors_x:0;anchors_y:85}D{i:26;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:85}
+D{i:23;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}D{i:22;anchors_height:133;anchors_width:40;anchors_x:0;anchors_y:0}
+D{i:27;anchors_width:300}D{i:21;anchors_height:12;anchors_width:40;anchors_x:104;anchors_y:85}
+D{i:31;anchors_height:40;anchors_width:40;anchors_x:0;anchors_y:0}D{i:32;anchors_height:40;anchors_width:40;anchors_x:0;anchors_y:0}
+D{i:30;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}D{i:29;anchors_height:152.33333333333337;anchors_width:100;anchors_x:1042;anchors_y:0}
+D{i:34;anchors_width:300}D{i:35;anchors_height:360;anchors_width:200;anchors_x:0;anchors_y:"-30"}
+D{i:36;anchors_height:40;anchors_width:40;anchors_x:0;anchors_y:0}D{i:37;anchors_height:12;anchors_width:40;anchors_x:0;anchors_y:0}
+D{i:38;anchors_x:0}D{i:41;anchors_height:360;anchors_width:200;anchors_x:25;anchors_y:"-30"}
+D{i:40;anchors_height:100;anchors_width:126;anchors_x:177;anchors_y:245}D{i:44;anchors_height:360;anchors_width:200;anchors_x:0;anchors_y:"-30"}
+D{i:46;anchors_height:360;anchors_width:120;anchors_x:50;anchors_y:590}D{i:47;anchors_height:360;anchors_width:120;anchors_x:50;anchors_y:"-30"}
+D{i:48;anchors_height:360;anchors_width:200;anchors_x:50;anchors_y:86}D{i:49;anchors_height:360;anchors_width:120;anchors_x:50;anchors_y:590}
+D{i:50;anchors_height:360;anchors_width:120;anchors_x:50;anchors_y:"-30"}D{i:51;anchors_height:360;anchors_width:200;anchors_x:50;anchors_y:86}
+D{i:52;anchors_height:100;anchors_width:50;anchors_x:50;anchors_y:0}D{i:53;anchors_height:360;anchors_width:200;anchors_x:0;anchors_y:280}
+D{i:54;anchors_height:360;anchors_width:200;anchors_x:0;anchors_y:"-30"}D{i:55;anchors_height:360;anchors_width:200;anchors_x:104;anchors_y:280}
+D{i:56;anchors_height:360;anchors_width:200;anchors_x:0;anchors_y:280}D{i:57;anchors_height:360;anchors_width:40;anchors_x:104;anchors_y:280}
+D{i:43;anchors_height:360;anchors_width:200;anchors_x:104;anchors_y:280}D{i:42;anchors_height:360;anchors_width:200;anchors_x:104;anchors_y:280}
+D{i:58;anchors_height:360;anchors_y:590}D{i:39;anchors_height:360;anchors_width:200;anchors_x:25;anchors_y:590}
+D{i:62;anchors_width:49;anchors_x:145}D{i:61;anchors_height:200;anchors_width:250;anchors_x:0;anchors_y:6}
+D{i:63;anchors_x:104}D{i:60;anchors_height:200;anchors_width:49;anchors_x:145;anchors_y:6}
+D{i:67;anchors_width:49;anchors_x:145}D{i:66;anchors_height:200;anchors_width:250;anchors_x:0;anchors_y:6}
+D{i:68;anchors_x:104}D{i:65;anchors_height:200;anchors_width:49;anchors_x:145;anchors_y:6}
+D{i:64;anchors_y:6}
 }
  ##^##*/
