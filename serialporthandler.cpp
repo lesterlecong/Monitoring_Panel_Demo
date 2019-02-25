@@ -125,23 +125,22 @@ void SerialPortHandler::parseReceivedData(QString data)
 
     if(type == QString("t"))
     {
-        //m_standardOutput << QObject::tr("Temperature") <<endl;
-        emit newTemperatureData(widgetNum, splitData.at(2).toFloat());
+        float tempValue = splitData.at(2).toFloat();
+        emit newTemperatureData(widgetNum, tempValue);
+
+        int led_state = 0;
+        led_state = (tempValue > 70 && tempValue <= 80)? 1: led_state;
+        led_state = (tempValue > 80)? 2: led_state;
+        emit newLEDData(widgetNum, led_state);
+
     }
     else if(type == QString("a"))
     {
-        //m_standardOutput << QObject::tr("Accelerometer") <<endl;
         emit newAccelerometerData(widgetNum, splitData.at(2).toFloat());
     }
     else if(type == QString("r"))
     {
-        //m_standardOutput << QObject::tr("RPM") <<endl;
         emit newRPMData(widgetNum, splitData.at(2).toInt());
-    }
-    else if(type == QString("l"))
-    {
-        //m_standardOutput << QObject::tr("LED") <<endl;
-        emit newLEDData(widgetNum, splitData.at(2).toInt());
     }
 
 }
