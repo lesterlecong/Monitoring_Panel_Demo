@@ -6,8 +6,6 @@ import QtCharts 2.3
 
 Item {
 
-    property alias top_title: top_title_id
-
     property alias ir_bearing_green: ir_bearing_green_id
     property alias ir_bearing_yellow: ir_bearing_yellow_id
     property alias ir_bearing_red: ir_bearing_red_id
@@ -39,9 +37,9 @@ Item {
             width: (parent.width)*(0.20)
             height: width
             color: "#00ffffff"
+            anchors.bottomMargin: (parent.height - (4*height) )/5
             anchors.leftMargin: 5+( 5*((parent.width-150)/150))
             anchors.bottom: led_therm_background.top
-            anchors.bottomMargin: 0
             anchors.left: parent.left
 
             Image {
@@ -88,9 +86,9 @@ Item {
             width: (parent.width)*(0.20)
             height: width
             color: "#00ffffff"
+            anchors.verticalCenterOffset: ((height/2) + (((parent.height - (4*height))/5)/2))*(-1)
+            anchors.verticalCenter: parent.verticalCenter
             anchors.leftMargin: 5+( 5*((parent.width-150)/150))
-            anchors.bottom: led_roller_background.top
-            anchors.bottomMargin: 0
             anchors.left: parent.left
 
             Image {
@@ -149,9 +147,9 @@ Item {
             width: (parent.width)*(0.20)
             height: width
             color: "#00ffffff"
+            anchors.verticalCenterOffset: ((height/2) + (((parent.height - (4*height))/5)/2))
+            anchors.verticalCenter: parent.verticalCenter
             anchors.leftMargin: 5+( 5*((parent.width-150)/150))
-            anchors.bottom: led_shock_background.top
-            anchors.bottomMargin: 0
             anchors.left: parent.left
 
             Image {
@@ -207,14 +205,13 @@ Item {
 
         Rectangle {
             id: led_shock_background
-            y: 120
             width: (parent.width)*(0.20)
             height: width
             color: "#00ffffff"
-            anchors.bottomMargin: 5+( 5*((parent.height-150)/150))
+            anchors.topMargin: (parent.height - (4*height) )/5
+            anchors.top: led_roller_background.bottom
             anchors.leftMargin: 5+( 5*((parent.width-150)/150))
             anchors.left: parent.left
-            anchors.bottom: parent.bottom
 
             Image {
                 id: shock_yellow_id
@@ -352,23 +349,6 @@ Item {
             verticalAlignment: Text.AlignVCenter
         }
 
-        Text {
-            id: top_title_id
-            width: parent.width
-            height: 15 + (15* ((parent.height - 150)/150))
-            color: "#dfdfdf"
-            text: qsTr("Roller 0")
-            font.bold: true
-            font.pixelSize: 15+(15*((parent.height-150)/150))
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            anchors.right: parent.right
-            anchors.rightMargin: 0
-            anchors.left: parent.left
-            anchors.leftMargin: 0
-            font.family: "Courier"
-        }
-
     }
 }
 
@@ -388,7 +368,9 @@ Item {
 
 
 
+
+
 /*##^## Designer {
-    D{i:1;anchors_height:150;anchors_width:150;anchors_x:0;anchors_y:0}
+    D{i:10;anchors_y:80}D{i:14;anchors_y:120}D{i:1;anchors_height:150;anchors_width:150;anchors_x:0;anchors_y:0}
 }
  ##^##*/

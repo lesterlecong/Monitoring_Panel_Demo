@@ -112,5 +112,7 @@
         <file>ThermometerLevel.qml</file>
         <file>Images/Thermometer Level/18-01.png</file>
         <file>StatusLED.qml</file>
+        <file>RollerPageForm.qml</file>
+        <file>HomePageForm.qml</file>
     </qresource>
 </RCC>
