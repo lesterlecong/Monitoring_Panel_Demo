@@ -15,12 +15,14 @@ ApplicationWindow {
     color: "#090808"
     title: qsTr("Monitoring Panel")
 
+
+
     SwipeView {
         id: swipeView
         anchors.fill: parent
 
         HomePageForm{
-
+            id: homepage
         }
 
         RollerPageForm {
@@ -31,6 +33,47 @@ ApplicationWindow {
         Component.objectName: contentItem.interactive = false
     }
 
+    SerialPortHandler {
+        id: serialPortHandler
+        signal changeToGreen()
+        signal changeToYellow()
+        signal changeToRed()
+
+        onNewPortDetected: homepage.serialPortsComboBox.addPort(portName)
+        onNewLEDData: function(rollerNum, widgetNum, value) {
+            if(swipeView.currentIndex == 0) {
+                homepage.roller[rollerNum].leds[widgetNum].status(value);
+            }
+            else {
+                console.log("Roller Number:" + rollerpage.roller_number)
+
+                if(rollerNum === rollerpage.roller_number) {
+                    rollerpage.bearing_status.leds[widgetNum].status(value);
+                 }
+            }
+
+        }
+
+        onNewTemperatureData: function(rollerNum, widgetNum, value) {
+            if(rollerNum === rollerpage.roller_number) {
+                rollerpage.thermometers[widgetNum].tempValue(value);
+            }
+        }
+
+        onNewAccelerometerData: function(rollerNum, widgetNum, value) {
+            if(rollerNum === rollerpage.roller_number) {
+                rollerpage.accelerometers[widgetNum].add_value(value);
+            }
+        }
+
+        onNewRPMData: function(rollerNum, widgetNum, value) {
+            if(rollerNum === rollerpage.roller_number) {
+                rollerpage.rpm_gyro.needleValue(value)
+            }
+        }
+
+
+    }
 
 
 

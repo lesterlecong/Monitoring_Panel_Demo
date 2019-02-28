@@ -32,10 +32,12 @@ signals:
     void portNameChanged();
     void baudRateChanged();
     void newPortDetected(QString portName);
-    void newTemperatureData(int widgetNum, float data);
-    void newAccelerometerData(int widgetNum, float data);
-    void newRPMData(int widgetNum, int data);
-    void newLEDData(int widgetNum, int data);
+    void newTemperatureData(int rollerNum, int widgetNum, float data);
+    void newAccelerometerData(int rollerNum, int widgetNum, float data);
+    void newRPMData(int rollerNum, int widgetNum, int data);
+    void newLEDData(int rollerNum, int widgetNum, int data);
+    void newMACAddressData(int rollerNum, QString macAddr);
+    void newBatteryLevelData(int rollerNum, int battLevel);
 public slots:
     void handleReadyRead();
     void handleDataReceived();
@@ -51,6 +53,7 @@ private:
     QTimer m_timer;
     QString m_portName;
     int m_baudRate;
+    char m_buffer[1024];
 };
 
 #endif // SERIALPORTHANDLER_H

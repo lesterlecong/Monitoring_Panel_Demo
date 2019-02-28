@@ -114,5 +114,6 @@
         <file>StatusLED.qml</file>
         <file>RollerPageForm.qml</file>
         <file>HomePageForm.qml</file>
+        <file>Images/settings button-01.svg</file>
     </qresource>
 </RCC>

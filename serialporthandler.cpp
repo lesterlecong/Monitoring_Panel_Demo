@@ -70,28 +70,38 @@ int SerialPortHandler::getBaudRate()
 
 void SerialPortHandler::handleReadyRead()
 {
-    //m_readData.append(m_serialPort->readLine());
-
-    m_dataReceiveList.append(m_serialPort->readLine());
-
-
+    //m_dataReceiveList.append(m_serialPort->readLine());
+    //memset(m_buffer, 0, 1024);
+    //qint64 lineLength = m_serialPort->readLine(m_buffer, 1024);
 
 
-    /*
-    if(!m_timer.isActive())
+    QString dataRead;
+    while(m_serialPort->canReadLine())
     {
-        m_timer.start(5000);
-    }*/
+         dataRead = QString::fromLatin1(m_serialPort->readLine());
+
+    }
+
+    if(!dataRead.isEmpty())
+    {
+        //m_standardOutput << "Read data:";
+        //m_standardOutput << dataRead;
+        //m_standardOutput << endl;
+        m_dataReceiveList.append(dataRead);
+    }
+
 }
 
 void SerialPortHandler::handleDataReceived()
 {
+
+
     if(!m_dataReceiveList.isEmpty())
     {
         for(int index = 0; index < m_dataReceiveList.size(); index++)
         {
             parseReceivedData(m_dataReceiveList.at(index));
-            //m_standardOutput << "Read data:" << m_dataReceiveList.at(index) << endl;
+            m_standardOutput << "Read data:" << m_dataReceiveList.at(index) << endl;
         }
 
         m_dataReceiveList.clear();
@@ -115,33 +125,62 @@ void SerialPortHandler::parseReceivedData(QString data)
     QRegExp regex("[,]");
     QStringList splitData = data.split(regex, QString::SkipEmptyParts);
 
-    if(splitData.count() < 3)
+    if(splitData.count() < 11)
     {
         return;
     }
 
-    QString type = splitData.at(0);
-    int widgetNum = splitData.at(1).toInt();
+    QString startPacket = splitData.at(0);
 
-    if(type == QString("t"))
+    if(startPacket.compare("p") != 0)
     {
-        float tempValue = splitData.at(2).toFloat();
-        emit newTemperatureData(widgetNum, tempValue);
+        return;
+    }
 
-        int led_state = 0;
-        led_state = (tempValue > 70 && tempValue <= 80)? 1: led_state;
-        led_state = (tempValue > 80)? 2: led_state;
-        emit newLEDData(widgetNum, led_state);
+    int rollerNum = splitData.at(1).toInt();
+    float temp0Value = splitData.at(2).toFloat();
+    float temp1Value = splitData.at(3).toFloat();
+    float temp2Value = splitData.at(4).toFloat();
+    float accelXValue = splitData.at(5).toFloat();
+    float accelYValue = splitData.at(6).toFloat();
+    float accelZValue = splitData.at(7).toFloat();
+    int rpmValue = splitData.at(8).toInt();
+    int shockValue = splitData.at(9).toInt();
+    QString macAddr = splitData.at(10);
+    int batteryLevel = splitData.at(11).toInt();
 
-    }
-    else if(type == QString("a"))
-    {
-        emit newAccelerometerData(widgetNum, splitData.at(2).toFloat());
-    }
-    else if(type == QString("r"))
-    {
-        emit newRPMData(widgetNum, splitData.at(2).toInt());
-    }
+    emit newTemperatureData(rollerNum, 0, temp0Value);
+    emit newTemperatureData(rollerNum, 1, temp1Value);
+    emit newTemperatureData(rollerNum, 2, temp2Value);
+
+    int led_state_0 = 0;
+    int led_state_1 = 0;
+    int led_state_2 = 0;
+
+    led_state_0 = (temp0Value > 70 && temp0Value <= 80)? 1: led_state_0;
+    led_state_0 = (temp0Value > 80)? 2: led_state_0;
+
+    led_state_1 = (temp1Value > 70 && temp1Value <= 80)? 1: led_state_1;
+    led_state_1 = (temp1Value > 80)? 2: led_state_1;
+
+    led_state_2 = (temp2Value > 70 && temp2Value <= 80)? 1: led_state_2;
+    led_state_2 = (temp2Value > 80)? 2: led_state_2;
+
+    emit newLEDData(rollerNum, 0, led_state_0);
+    emit newLEDData(rollerNum, 1, led_state_1);
+    emit newLEDData(rollerNum, 2, led_state_2);
+    emit newLEDData(rollerNum, 3, shockValue);
+
+    emit newAccelerometerData(rollerNum, 0, accelXValue);
+    emit newAccelerometerData(rollerNum, 1, accelYValue);
+    emit newAccelerometerData(rollerNum, 2, accelZValue);
+
+    emit newRPMData(rollerNum, 0, rpmValue);
+
+    emit newMACAddressData(rollerNum, macAddr);
+
+    emit newBatteryLevelData(rollerNum, batteryLevel);
+
 
 }
 

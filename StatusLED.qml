@@ -6,21 +6,18 @@ import QtCharts 2.3
 
 Item {
 
-    property alias ir_bearing_green: ir_bearing_green_id
-    property alias ir_bearing_yellow: ir_bearing_yellow_id
-    property alias ir_bearing_red: ir_bearing_red_id
+    property alias led_ir: led_ir
+    property alias led_thermo: led_thermo
+    property alias led_roller: led_roller
+    property alias led_shock: led_shock
 
-    property alias thermo_bearing_green: thermo_bearing_green_id
-    property alias thermo_bearing_yellow: thermo_bearing_yellow_id
-    property alias thermo_bearing_red: thermo_bearing_red_id
+    property var leds:[
+        led_ir,
+        led_thermo,
+        led_roller,
+        led_shock
+    ]
 
-    property alias roller_bearing_green: roller_bearing_green_id
-    property alias roller_bearing_yellow: roller_bearing_yellow_id
-    property alias roller_bearing_red: roller_bearing_red_id
-
-    property alias shock_green: shock_green_id
-    property alias shock_yellow: shock_yellow_id
-    property alias shock_red: shock_red_id
     width: 150
     height: 150
 
@@ -33,13 +30,13 @@ Item {
         border.color: "#2c2a2a"
 
         Rectangle {
-            id: led_ir_background
+            id: led_ir
             width: (parent.width)*(0.20)
             height: width
             color: "#00ffffff"
             anchors.bottomMargin: (parent.height - (4*height) )/5
             anchors.leftMargin: 5+( 5*((parent.width-150)/150))
-            anchors.bottom: led_therm_background.top
+            anchors.bottom: led_thermo.top
             anchors.left: parent.left
 
             Image {
@@ -77,11 +74,17 @@ Item {
                 source: "Images/LED yellow.svg"
                 mipmap: true
             }
+
+            function status(st) {
+                ir_bearing_green_id.visible = (st === 0)
+                ir_bearing_yellow_id.visible = (st === 1)
+                ir_bearing_red_id.visible = (st === 2)
+            }
         }
 
 
         Rectangle {
-            id: led_therm_background
+            id: led_thermo
             y: 40
             width: (parent.width)*(0.20)
             height: width
@@ -135,6 +138,12 @@ Item {
                 anchors.fill: parent
                 Layout.preferredHeight: 80
             }
+
+            function status(st) {
+                thermo_bearing_green_id.visible = (st === 0)
+                thermo_bearing_yellow_id.visible = (st === 1)
+                thermo_bearing_red_id.visible = (st === 2)
+            }
         }
 
 
@@ -142,7 +151,7 @@ Item {
 
 
         Rectangle {
-            id: led_roller_background
+            id: led_roller
             y: 80
             width: (parent.width)*(0.20)
             height: width
@@ -200,16 +209,20 @@ Item {
                 Layout.preferredHeight: 80
             }
 
-
+            function status(st) {
+                roller_bearing_green_id.visible = (st === 0)
+                roller_bearing_yellow_id.visible = (st === 1)
+                roller_bearing_red_id.visible = (st === 2)
+            }
         }
 
         Rectangle {
-            id: led_shock_background
+            id: led_shock
             width: (parent.width)*(0.20)
             height: width
             color: "#00ffffff"
             anchors.topMargin: (parent.height - (4*height) )/5
-            anchors.top: led_roller_background.bottom
+            anchors.top: led_roller.bottom
             anchors.leftMargin: 5+( 5*((parent.width-150)/150))
             anchors.left: parent.left
 
@@ -261,6 +274,12 @@ Item {
                 Layout.preferredHeight: 80
             }
 
+            function status(st) {
+                shock_green_id.visible = (st === 0)
+                shock_yellow_id.visible = (st === 1)
+                shock_red_id.visible = (st === 2)
+            }
+
 
         }
 
@@ -268,15 +287,15 @@ Item {
             id: led_label_shock_1
             y: 30
             width: parent.width-40
-            height: led_shock_background.height
+            height: led_shock.height
             color: "#6f7479"
             text: qsTr("Shock")
             font.pixelSize: 10+(10*((width-110)/110))
             anchors.right: parent.right
             anchors.rightMargin: 5
-            anchors.left: led_shock_background.right
+            anchors.left: led_shock.right
             anchors.leftMargin: 5
-            anchors.verticalCenter: led_shock_background.verticalCenter
+            anchors.verticalCenter: led_shock.verticalCenter
             Layout.preferredHeight: 80
             Layout.preferredWidth: 200
             font.bold: true
@@ -288,15 +307,15 @@ Item {
             id: led_roller_bearing
             y: 172
             width: parent.width-40
-            height: led_roller_background.height
+            height: led_roller.height
             color: "#6f7479"
             text: qsTr("Roller")
             font.pixelSize: 10+(10*((width-110)/110))
             anchors.right: parent.right
             anchors.rightMargin: 5
-            anchors.left: led_roller_background.right
+            anchors.left: led_roller.right
             anchors.leftMargin: 5
-            anchors.verticalCenter: led_roller_background.verticalCenter
+            anchors.verticalCenter: led_roller.verticalCenter
             Layout.preferredHeight: 80
             Layout.preferredWidth: 200
             font.bold: true
@@ -308,15 +327,15 @@ Item {
             id: led_label_therm_bearing
             y: 86
             width: parent.width-40
-            height: led_therm_background.height
+            height: led_thermo.height
             color: "#6f7479"
             text: qsTr("Therm Bearing")
             font.pixelSize: 10+(10*((width-110)/110))
             anchors.right: parent.right
             anchors.rightMargin: 5
-            anchors.left: led_therm_background.right
+            anchors.left: led_thermo.right
             anchors.leftMargin: 5
-            anchors.verticalCenter: led_therm_background.verticalCenter
+            anchors.verticalCenter: led_thermo.verticalCenter
             horizontalAlignment: Text.AlignLeft
             textFormat: Text.RichText
             wrapMode: Text.WordWrap
@@ -331,14 +350,14 @@ Item {
             id: led_label_ir_bearing
             y: 0
             width: parent.width-40
-            height: led_ir_background.height
+            height: led_ir.height
             color: "#6f7479"
             text: qsTr("IR Bearing")
             font.pixelSize: 10+(10*((width-110)/110))
             anchors.right: parent.right
             anchors.rightMargin: 5
-            anchors.verticalCenter: led_ir_background.verticalCenter
-            anchors.left: led_ir_background.right
+            anchors.verticalCenter: led_ir.verticalCenter
+            anchors.left: led_ir.right
             anchors.leftMargin: 5
             textFormat: Text.RichText
             wrapMode: Text.WordWrap
