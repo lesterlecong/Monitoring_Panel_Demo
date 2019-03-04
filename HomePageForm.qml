@@ -522,8 +522,28 @@ Page {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    settings_popup.open()
+                    configuration_popup.open()
                 }
+            }
+        }
+
+        Popup {
+            id: configuration_popup
+            x: ((parent.width/2) - (width/2))
+            y: ((parent.height/2) - (height/2))
+            width: parent.width * 0.8
+            height: parent.height *0.80
+            modal: true
+            focus: true
+            closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+
+            Configuration {
+                id: configuration
+                x: ((parent.width/2) - (width/2))
+                y: ((parent.height/2) - (height/2))
+                width: configuration_popup.width
+                height: configuration_popup.height
+                onClose: configuration_popup.close()
             }
         }
 
@@ -536,6 +556,9 @@ Page {
             modal: true
             focus: true
             closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+
+
+
 
             Rectangle {
                 id: popup_background
@@ -737,11 +760,20 @@ Page {
 
 
 
+
+
+
+
+
+
+
+
 /*##^## Designer {
     D{i:0;autoSize:true;height:480;width:640}D{i:4;anchors_y:170}D{i:8;anchors_x:"-6";anchors_y:170}
 D{i:10;anchors_x:6;anchors_y:170}D{i:12;anchors_x:1;anchors_y:170}D{i:14;anchors_x:133;anchors_y:170}
 D{i:16;anchors_x:"-3";anchors_y:8}D{i:18;anchors_x:0;anchors_y:"-4"}D{i:20;anchors_x:0;anchors_y:2}
-D{i:22;anchors_x:"-9"}D{i:27;anchors_x:"-6"}D{i:28;anchors_width:96;anchors_x:2}D{i:29;anchors_width:640;anchors_x:"-4"}
-D{i:32;anchors_width:640}D{i:55;anchors_x:257}
+D{i:22;anchors_x:"-9"}D{i:23;anchors_x:"-9"}D{i:27;anchors_x:"-6"}D{i:28;anchors_width:96;anchors_x:"-6"}
+D{i:29;anchors_width:96;anchors_x:2}D{i:30;anchors_width:640;anchors_x:"-4"}D{i:32;anchors_width:640}
+D{i:34;anchors_width:640}D{i:55;anchors_x:257}D{i:58;anchors_x:257}
 }
  ##^##*/

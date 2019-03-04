@@ -72,6 +72,19 @@ ApplicationWindow {
             }
         }
 
+        onNewMACAddressData: function(rollerNum, value) {
+            if(rollerNum === rollerpage.roller_number) {
+                rollerpage.mac_address.text = value
+            }
+        }
+
+        onNewBatteryLevelData: function(rollerNum, value){
+            console.log("Roller:" + rollerNum + ", Value:" + value)
+            if(rollerNum === rollerpage.roller_number) {
+                rollerpage.battery_level_progress_bar.value = value
+            }
+        }
+
 
     }
 

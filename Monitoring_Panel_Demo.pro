@@ -17,7 +17,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
     accelerometerhandler.cpp \
-    serialporthandler.cpp
+    serialporthandler.cpp \
+    radialbar.cpp
 
 RESOURCES += qml.qrc
 
@@ -34,4 +35,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     accelerometerhandler.h \
-    serialporthandler.h
+    serialporthandler.h \
+    radialbar.h

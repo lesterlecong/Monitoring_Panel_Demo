@@ -1,16 +1,22 @@
 import QtQuick 2.9
+import QtQuick 2.12
 import QtQuick.Controls 2.2
+import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.3
 import QtQuick.Controls.Styles 1.4
 import QtCharts 2.3
 
 import com.kmi.accelerometerhandler 1.0
 import com.kmi.serialporthandler 1.0
+import CustomControls 1.0
 
 Page {
     property alias roller_form_title: roller_form_title_id
     property alias rpm_gyro: rpm_gyro_background
     property alias bearing_status: bearing_status_0
+    property alias mac_address: device_mac_address
+    property alias battery_level_progress_bar: battery_level_progress_bar
+
     property int roller_number: 0
     property var thermometers:[
         thermometer_bearing_1,
@@ -914,19 +920,6 @@ Page {
 
 
 
-        Slider {
-            id: slider
-            x: 14
-            y: 719
-            stepSize: 1
-            to: 100
-            snapMode: Slider.SnapAlways
-            from: 0
-
-            onValueChanged: thermometer_bearing_1.tempValue(value)
-
-
-        }
 
 
 
@@ -936,20 +929,6 @@ Page {
 
 
 
-
-
-        Slider {
-            id: slider1
-            x: 22
-            y: 765
-            stepSize: 1
-            snapMode: Slider.SnapAlways
-            to: 300
-            value: 0
-            from: 0
-
-            onValueChanged: gyro.needleValue(value)
-        }
 
 
 
@@ -1073,25 +1052,77 @@ Page {
                 anchors.left: parent.left
                 anchors.leftMargin: 5
             }
-
+            /*
             ProgressBar {
                 id: battery_level_progress_bar
-                width: parent.width - 10
-                height: width*0.11
+                width: parent.width - 20
+                height: width*0.3
                 to: 100
                 anchors.top: battery_level_label.bottom
                 anchors.topMargin: 5
                 anchors.right: parent.right
-                anchors.rightMargin: 5
+                anchors.rightMargin: 10
                 anchors.left: parent.left
-                anchors.leftMargin: 5
-                value: 20
+                anchors.leftMargin: 10
+                value: 50
+
+                background: Rectangle {
+                        implicitWidth: 200
+                        implicitHeight: 6
+                        color: "#e6e6e6"
+                        radius: 10
+                    }
+
+                    contentItem: Item {
+                        implicitWidth: 200
+                        implicitHeight: 4
+
+                        Rectangle {
+
+                            width: battery_level_progress_bar.visualPosition * parent.width
+                            height: parent.height
+                            radius: 8
+                            color: "#17a81a"
+                        }
+                    }
+
+            }*/
+
+            RadialBar {
+                id: battery_level_progress_bar
+                width: height
+                //height: parent.height - (20 + mac_address_label.height + device_mac_address.height + battery_level_label.height)
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: battery_level_label.bottom
+                anchors.bottom: parent.bottom
+                anchors.topMargin: 5
+                anchors.bottomMargin: 5
+                penStyle: Qt.RoundCap
+                dialType: RadialBar.FullDial
+                progressColor: "#1dc58f"
+                foregroundColor: "#191a2f"
+                dialWidth: (width*0.08)
+                startAngle: 180
+                spanAngle: 70
+                minValue: 0
+                maxValue: 100
+                value: 50
+                textFont {
+                            family: "Halvetica"
+                            italic: false
+                            pointSize: 8 + (8*((width - 142)/142))
+                        }
+                suffixText: "%"
+                textColor: "#FFFFFF"
+
             }
+
+
         }
 
 
 
-
+        /*
         Button {
             id: back_button
             width: height
@@ -1105,6 +1136,28 @@ Page {
             onClicked: {
                 swipeView.currentIndex = 0
             }
+        }*/
+
+        Image {
+            id: home_button
+            width: height
+            anchors.left: parent.left
+            anchors.leftMargin: 5
+            anchors.bottom: thermo_bearing_background_1.top
+            anchors.bottomMargin: 5
+            anchors.top: parent.top
+            anchors.topMargin: 5
+            source: "Images/home-01.svg"
+            mipmap: true
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    swipeView.currentIndex = 0
+                }
+            }
+
+
         }
 
 
@@ -1131,6 +1184,66 @@ Page {
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include "accelerometerhandler.h"
 #include "serialporthandler.h"
+#include "radialbar.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,6 +14,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<AccelerometerHandler>("com.kmi.accelerometerhandler",1,0,"AccelerometerHandler");
     qmlRegisterType<SerialPortHandler>("com.kmi.serialporthandler",1,0,"SerialPortHandler");
+    qmlRegisterType<RadialBar>("CustomControls", 1, 0, "RadialBar");
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())
