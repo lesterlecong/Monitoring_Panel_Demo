@@ -6,8 +6,6 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls.Styles 1.4
 import QtCharts 2.3
 
-import com.kmi.accelerometerhandler 1.0
-import com.kmi.serialporthandler 1.0
 import CustomControls 1.0
 
 Page {
@@ -274,15 +272,6 @@ Page {
 
             }
         }
-
-        AccelerometerHandler {
-            id: accelxHandler
-
-
-        }
-
-
-
 
 
         Rectangle {

@@ -288,7 +288,7 @@ Item {
             y: 30
             width: parent.width-40
             height: led_shock.height
-            color: "#6f7479"
+            color: "#ffffff"
             text: qsTr("Shock")
             font.pixelSize: 10+(10*((width-110)/110))
             anchors.right: parent.right
@@ -308,7 +308,7 @@ Item {
             y: 172
             width: parent.width-40
             height: led_roller.height
-            color: "#6f7479"
+            color: "#ffffff"
             text: qsTr("Roller")
             font.pixelSize: 10+(10*((width-110)/110))
             anchors.right: parent.right
@@ -328,7 +328,7 @@ Item {
             y: 86
             width: parent.width-40
             height: led_thermo.height
-            color: "#6f7479"
+            color: "#ffffff"
             text: qsTr("Therm Bearing")
             font.pixelSize: 10+(10*((width-110)/110))
             anchors.right: parent.right
@@ -351,7 +351,7 @@ Item {
             y: 0
             width: parent.width-40
             height: led_ir.height
-            color: "#6f7479"
+            color: "#ffffff"
             text: qsTr("IR Bearing")
             font.pixelSize: 10+(10*((width-110)/110))
             anchors.right: parent.right

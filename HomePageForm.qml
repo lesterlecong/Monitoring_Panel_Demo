@@ -6,7 +6,7 @@ import QtQuick.Controls.Styles 1.4
 import QtCharts 2.3
 
 Page {
-    property alias serialPortsComboBox: serialPortsComboBox
+
     property alias bearing_status_home_0: bearing_status_home_0
     property alias bearing_status_home_1: bearing_status_home_1
     property alias bearing_status_home_2: bearing_status_home_2
@@ -30,6 +30,7 @@ Page {
         bearing_status_home_8,
         bearing_status_home_9
     ]
+    property alias serial_configuration: serial_configuration
 
     //id: page
     Rectangle {
@@ -516,7 +517,7 @@ Page {
             anchors.right: parent.right
             anchors.rightMargin: 5
             fillMode: Image.PreserveAspectFit
-            source: "Images/settings button-01.svg"
+            source: "Images/settings.svg"
             mipmap: true
 
             MouseArea {
@@ -547,143 +548,50 @@ Page {
             }
         }
 
+        Image {
+            id: serial_button
+            x: 524
+            y: 2
+            width: parent.width * 0.0625
+            height: width
+            anchors.rightMargin: 5
+            anchors.top: parent.top
+            anchors.topMargin: 5
+            mipmap: true
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    serial_configuration_popup.open()
+                }
+            }
+            source: "Images/usb.svg"
+            anchors.right: settings.left
+            fillMode: Image.PreserveAspectFit
+        }
+
         Popup {
-            id: settings_popup
+            id: serial_configuration_popup
             x: ((parent.width/2) - (width/2))
             y: ((parent.height/2) - (height/2))
-            width: parent.width * 0.8
+            width: parent.width * 0.5
             height: parent.height *0.80
             modal: true
             focus: true
             closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+            background: Rectangle {
+                implicitWidth: parent.width * 0.5
+                implicitHeight: parent.width *0.80
+                color: "#00fa00ff"
+            }
 
-
-
-
-            Rectangle {
-                id: popup_background
+            SerialConfiguration{
+                id: serial_configuration
                 x: ((parent.width/2) - (width/2))
                 y: ((parent.height/2) - (height/2))
-                width: settings_popup.width
-                height: settings_popup.height
-                color: "#2c2a2a"
-                border.color: "#2c2a2a"
-
-                ComboBox {
-                    id: serialPortsComboBox
-                    x: 181
-                    y: 124
-                    width: parent.width*0.3
-                    height: parent.height*0.15
-                    font.pointSize: 8 + (8*((width-154)/154))
-                    anchors.verticalCenter: baudRateComboBox.verticalCenter
-                    anchors.right: baudRateComboBox.left
-                    anchors.rightMargin: 5
-                    Layout.preferredHeight: 40
-                    Layout.preferredWidth: 126
-                    textRole: "text"
-                    editable: false
-
-
-                    model: ListModel
-                    {
-                        id: portListItems
-
-                    }
-
-
-
-                    function addPort(portName) {
-                        //console.log("New Port Received:" + portName)
-                        if(serialPortsComboBox.find(portName) === -1) {
-                            //console.log("Adding Port:" + portName)
-                            portListItems.append({text: portName})
-                            serialPortsComboBox.currentIndex = serialPortsComboBox.find(portName)
-                        }
-                    }
-
-                    onCurrentIndexChanged: console.debug(portListItems.get(currentIndex).text + ", " + portListItems.get(currentIndex).color)
-                    Component.onCompleted: serialPortHandler.availablePorts()
-                }
-
-                ComboBox {
-                    id: baudRateComboBox
-                    x: 186
-                    y: 172
-                    width: parent.width*0.3
-                    height: parent.height*0.15
-                    font.pointSize: 8 + (8*((width-154)/154))
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    Layout.preferredHeight: 40
-                    Layout.preferredWidth: 152
-                    textRole: "text"
-                    editable: false
-                    currentIndex: 5
-                    model: ListModel {
-                        id: baudRateItems
-                        ListElement{text: "110" ; value: 110}
-                        ListElement{text: "300" ; value: 300}
-                        ListElement{text: "600" ; value: 600}
-                        ListElement{text: "1200" ; value: 1200}
-                        ListElement{text: "2400" ; value: 2400}
-                        ListElement{text: "9600" ; value: 9600}
-                        ListElement{text: "14400" ; value: 14400}
-                        ListElement{text: "19200" ; value: 19200}
-                        ListElement{text: "38400" ; value: 38400}
-                        ListElement{text: "57600" ; value: 57600}
-                        ListElement{text: "115200" ; value: 115200}
-                        ListElement{text: "230400" ; value: 230400}
-                        ListElement{text: "460800" ; value: 460800}
-                        ListElement{text: "921600" ; value: 921600}
-                    }
-                }
-
-                Button {
-                    id: button
-                    y: 124
-                    width: parent.width*0.3
-                    height: parent.height*0.15
-                    text: qsTr("Connect")
-                    font.pointSize: 8 + (8*((width-154)/154))
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: baudRateComboBox.right
-                    anchors.leftMargin: 5
-                    Layout.preferredHeight: 40
-                    Layout.preferredWidth: 108
-                    onClicked: function() {
-                        console.debug("Connect to serial " +
-                                      portListItems.get(serialPortsComboBox.currentIndex).text +
-                                      " with baud rate of " +
-                                      baudRateItems.get(baudRateComboBox.currentIndex).value)
-
-                        serialPortHandler.portName = portListItems.get(serialPortsComboBox.currentIndex).text
-                        serialPortHandler.baudRate = baudRateItems.get(baudRateComboBox.currentIndex).value
-                        serialPortHandler.startSerialPort()
-
-                        settings_popup.close()
-                    }
-                }
-
-                Text {
-                    id: settings_label
-                    height: parent.height*0.1
-                    color: "#ffffff"
-                    text: qsTr("Settings")
-                    font.pixelSize: 25 + (25*((height - 38)/38))
-                    font.bold: true
-                    fontSizeMode: Text.Fit
-                    wrapMode: Text.WordWrap
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    anchors.top: parent.top
-                    anchors.topMargin: 5
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-                }
+                width: serial_configuration_popup.width
+                height: serial_configuration_popup.height
+                onClose: serial_configuration_popup.close()
             }
         }
 
@@ -768,12 +676,20 @@ Page {
 
 
 
+
+
+
+
+
+
+
+
 /*##^## Designer {
     D{i:0;autoSize:true;height:480;width:640}D{i:4;anchors_y:170}D{i:8;anchors_x:"-6";anchors_y:170}
 D{i:10;anchors_x:6;anchors_y:170}D{i:12;anchors_x:1;anchors_y:170}D{i:14;anchors_x:133;anchors_y:170}
 D{i:16;anchors_x:"-3";anchors_y:8}D{i:18;anchors_x:0;anchors_y:"-4"}D{i:20;anchors_x:0;anchors_y:2}
 D{i:22;anchors_x:"-9"}D{i:23;anchors_x:"-9"}D{i:27;anchors_x:"-6"}D{i:28;anchors_width:96;anchors_x:"-6"}
 D{i:29;anchors_width:96;anchors_x:2}D{i:30;anchors_width:640;anchors_x:"-4"}D{i:32;anchors_width:640}
-D{i:34;anchors_width:640}D{i:55;anchors_x:257}D{i:58;anchors_x:257}
+D{i:34;anchors_width:640}
 }
  ##^##*/

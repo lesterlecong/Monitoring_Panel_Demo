@@ -33,12 +33,20 @@ Item {
                                                      double_tap_duration DEC(10,2) DEFAULT 0.25,
                                                      double_tap_intensity INTEGER DEFAULT 0,
                                                      double_tap_6_scale INTEGER DEFAULT 2,
-                                                     sample_cycle_time DEC(10,2) DEFAULT 0.00,
-                                                     temperature_cycle_time DEC(10,2) DEFAULT 0.00)');
+                                                     sample_cycle_time DEC(10,2) DEFAULT 60.00,
+                                                     temperature_cycle_time DEC(10,2) DEFAULT 30.00)');
 
+                       var check_count = tx.executeSql('SELECT * FROM Configuration')
+                       if(check_count.rows.length === 0) {
+                            tx.executeSql('INSERT INTO Configuration VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                                                                          [ 0, 0, 0, 0, 0.25, 0, 2, 60.00, 30.00 ]);
+                       }
 
 
                        var result = tx.executeSql('SELECT * FROM Configuration')
+
+
+
                        for(var i = 0; i < result.rows.length; i++) {
                            console.log("Belt System Number:" + result.rows.item(i).belt_system_number)
                            console.log("Belt Line Number:" + result.rows.item(i).belt_line_number)
@@ -54,9 +62,13 @@ Item {
                            belt_line_number_value.text = result.rows.item(i).belt_line_number
                            row_number_value.text = result.rows.item(i).row_number
                            roller_number_value.text = result.rows.item(i).roller_number
-                           double_tap_duration_value.currentText = result.rows.item(i).double_tap_duration
+
+                           double_tap_duration_value.currentIndex = double_tap_duration_value.find(result.rows.item(i).double_tap_duration)
+
                            double_tap_intensity_value.value = result.rows.item(i).double_tap_intensity
-                           double_tap_6_scal_value.currentText = result.rows.item(i).double_tap_6_scale
+
+                           double_tap_6_scal_value.currentIndex = double_tap_6_scal_value.find(result.rows.item(i).double_tap_6_scale)
+
                            sample_cycle_time_value.text = result.rows.item(i).sample_cycle_time
                            temperature_cycle_time_value.text = result.rows.item(i).temperature_cycle_time
                        }
@@ -165,7 +177,7 @@ Item {
             model: ListModel {
                 id: double_tap_duration_items
                 ListElement{text: "0.25" ; value: 0.25}
-                ListElement{text: "0.50" ; value: 0.5}
+                ListElement{text: "0.5" ; value: 0.5}
                 ListElement{text: "0.75" ; value: 0.75}
             }
         }
@@ -364,7 +376,7 @@ Item {
             width: configuration_background.width*0.2
             height: belt_system_number_label.height
             color: "#ffffff"
-            text: qsTr("Sample Cycle Time")
+            text: "Sample Cycle Time (seconds)"
             font.bold: true
             font.pixelSize: 10 + (10*((width - 102)/102))
             anchors.rightMargin: configuration_background.width*0.02
@@ -401,7 +413,7 @@ Item {
             width: configuration_background.width*0.2
             height: belt_system_number_label.height
             color: "#ffffff"
-            text: qsTr("Temperature Cycle Time")
+            text: "Temperature Cycle Time (seconds)"
             font.bold: true
             font.pixelSize: 10 + (10*((width - 102)/102))
             anchors.topMargin: configuration_background.height*0.032
@@ -503,6 +515,12 @@ Item {
     }
 
 }
+
+
+
+
+
+
 
 
 

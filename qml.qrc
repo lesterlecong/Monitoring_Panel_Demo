@@ -117,5 +117,9 @@
         <file>Images/settings button-01.svg</file>
         <file>Images/home-01.svg</file>
         <file>Configuration.qml</file>
+        <file>Images/usb.svg</file>
+        <file>Images/settings.svg</file>
+        <file>SerialConfiguration.qml</file>
+        <file>Images/top_level_design_mask-01.svg</file>
     </qresource>
 </RCC>

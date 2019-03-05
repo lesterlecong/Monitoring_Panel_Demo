@@ -39,7 +39,7 @@ ApplicationWindow {
         signal changeToYellow()
         signal changeToRed()
 
-        onNewPortDetected: homepage.serialPortsComboBox.addPort(portName)
+        onNewPortDetected: homepage.serial_configuration.serialPortsComboBox.addPort(portName)
         onNewLEDData: function(rollerNum, widgetNum, value) {
             if(swipeView.currentIndex == 0) {
                 homepage.roller[rollerNum].leds[widgetNum].status(value);
