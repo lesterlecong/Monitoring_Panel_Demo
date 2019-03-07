@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.0
 import QtQuick.Controls 2.5
 import QtQuick.LocalStorage 2.12
+import QtQuick.Dialogs 1.1
 
 Item {
 
@@ -10,6 +11,18 @@ Item {
     height: 420
 
     signal close()
+
+    MessageDialog {
+        id: informationMessage
+        title: ""
+        text: "Strike the roller twice hard in the middle of the drum with in a 1/4 second."
+        icon: StandardIcon.Information
+        standardButtons: StandardButton.Ok
+
+        Component.onCompleted: visible = false
+
+
+    }
 
     Rectangle {
         id: configuration_background
@@ -547,6 +560,8 @@ Item {
                 catch(err) {
                                 console.log("Error accessing database: " + err)
                             }
+
+                informationMessage.open()
 
                 root.close()
             }
