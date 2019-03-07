@@ -33,18 +33,19 @@ Page {
         width: parent.width
         height: parent.height
 
-        color: "#090808"
+        color: "#262d37"
+        border.color: "#262d37"
 
         Rectangle {
             id: rpm_gyro_background
             y: 103
             width: height
             height: ((parent.height - 25 )/3) - ((((parent.height - 25 )/3))*0.065)
-            color: "#2c2a2a"
+            color: "#39414e"
             anchors.verticalCenter: accel_x_background.verticalCenter
             anchors.left: accel_x_background.right
             anchors.leftMargin: 5
-            border.color: "#2c2a2a"
+            border.color: "#39414e"
 
             Image {
                 id: gyro
@@ -108,11 +109,11 @@ Page {
             y: 10
             width: height
             height: ((parent.height - 25 )/3) - ((((parent.height - 25 )/3))*0.065)
-            color: "#2c2a2a"
+            color: "#39414e"
             anchors.verticalCenter: accel_x_background.verticalCenter
             anchors.right: accel_x_background.left
             anchors.rightMargin: 5
-            border.color: "#2c2a2a"
+            border.color: "#39414e"
 
             Image {
                 id: thermometer_bearing_1
@@ -280,7 +281,7 @@ Page {
             y: 7
             width: height
             height: ((parent.height - 25 )/3) - ((((parent.height - 25 )/3))*0.065)
-            color: "#2c2a2a"
+            color: "#39414e"
             anchors.verticalCenter: accel_y_background.verticalCenter
             Image {
                 id: thermometer_bearing_2
@@ -433,7 +434,7 @@ Page {
                 anchors.fill: parent
                 fillMode: Image.PreserveAspectFit
             }
-            border.color: "#2c2a2a"
+            border.color: "#39414e"
             anchors.rightMargin: 5
             anchors.right: accel_y_background.left
         }
@@ -443,7 +444,7 @@ Page {
             x: 11
             width: height
             height: ((parent.height - 25 )/3) - ((((parent.height - 25 )/3))*0.065)
-            color: "#2c2a2a"
+            color: "#39414e"
             anchors.verticalCenter: accel_z_background.verticalCenter
             Image {
                 id: thermometer_bearing_3
@@ -596,7 +597,7 @@ Page {
                 anchors.fill: parent
                 fillMode: Image.PreserveAspectFit
             }
-            border.color: "#2c2a2a"
+            border.color: "#39414e"
             anchors.rightMargin: 5
             anchors.right: accel_z_background.left
         }
@@ -619,10 +620,10 @@ Page {
             id: accel_x_background
             width: parent.width - 20 - (height*2)
             height: ((parent.height - 25 )/3) - ((((parent.height - 25 )/3))*0.065)
-            color: "#2c2a2a"
+            color: "#39414e"
             anchors.bottom: accel_y_background.top
             anchors.bottomMargin: 5
-            border.color: "#2c2a2a"
+            border.color: "#39414e"
             anchors.horizontalCenter: parent.horizontalCenter
 
             Item {
@@ -633,21 +634,27 @@ Page {
                         id: accelX_xAxis
                         min: 0
                         max: 5
+                        labelsColor: accelx_chart.plotAreaColor
+
                     }
 
                     ValueAxis {
                         id: accelX_yAxis
                         min: 0.0
                         max: 5.0
+                        labelsColor: accelx_chart.plotAreaColor
+
                     }
 
                     objectName: "AccelX_Chart"
                     id:accelx_chart
                     width: parent.width
                     height: parent.height
+                    plotAreaColor: "#e74c3c"
+                    dropShadowEnabled: true
                     anchors.fill: parent
                     animationOptions: ChartView.SeriesAnimations
-                    backgroundColor: "#000d0d0d"
+                    backgroundColor: "#00000000"
                     antialiasing: true
                     legend.visible: false
                     margins.bottom: 0
@@ -658,7 +665,7 @@ Page {
                     LineSeries {
                         id: accelx_series
                         /*name: "Accel X"*/
-                        color: "#ffff0000"
+                        color: "#ffffffff"
                     }
                 }
 
@@ -717,11 +724,11 @@ Page {
             id: accel_y_background
             width: parent.width - 20 - (height*2)
             height: ((parent.height - 25 )/3) - ((((parent.height - 25 )/3))*0.065)
-            color: "#2c2a2a"
+            color: "#39414e"
             anchors.bottom: accel_z_background.top
             anchors.bottomMargin: 5
             anchors.horizontalCenter: parent.horizontalCenter
-            border.color: "#2c2a2a"
+            border.color: "#39414e"
 
             Item {
                 id: accely_item
@@ -762,18 +769,21 @@ Page {
                         id: accelY_xAxis
                         min: 0
                         max: 5
+                        labelsColor: accely_chart.plotAreaColor
                     }
 
                     ValueAxis {
                         id: accelY_yAxis
                         min: 0
                         max: 5
+                        labelsColor: accely_chart.plotAreaColor
                     }
 
                     objectName: "AccelY_Chart"
                     id:accely_chart
                     width: parent.width
                     height: parent.height
+                    plotAreaColor: "#f1c40f"
                     anchors.fill: parent
                     animationOptions: ChartView.SeriesAnimations
                     backgroundColor: "#000d0d0d"
@@ -787,7 +797,7 @@ Page {
                     LineSeries {
                         id: accely_series
                         name: "Accel Y"
-                        color: "#ff00ff00"
+                        color: "#ffffffff"
                     }
                 }
             }
@@ -818,11 +828,11 @@ Page {
             id: accel_z_background
             width: parent.width - 20 - (height*2)
             height: ((parent.height - 25 )/3) - ((((parent.height - 25 )/3))*0.065)
-            color: "#2c2a2a"
+            color: "#39414e"
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 5
             anchors.horizontalCenter: parent.horizontalCenter
-            border.color: "#2c2a2a"
+            border.color: "#39414e"
 
             Item {
                 id: accelz_item
@@ -840,18 +850,21 @@ Page {
                         id: accelZ_xAxis
                         min: 0
                         max: 5
+                        labelsColor: accelz_chart.plotAreaColor
                     }
 
                     ValueAxis {
                         id: accelZ_yAxis
                         min: 0
                         max: 5
+                        labelsColor: accelz_chart.plotAreaColor
                     }
 
                     objectName: "AccelZ_Chart"
                     id:accelz_chart
                     width: parent.width
                     height: parent.height
+                    plotAreaColor: "#1abc9c"
                     anchors.fill: parent
                     animationOptions: ChartView.SeriesAnimations
                     backgroundColor: "#000d0d0d"
@@ -865,7 +878,7 @@ Page {
                     LineSeries {
                         id: accelz_series
                         name: "Accel Z"
-                        color: "#ff0000ff"
+                        color: "#ffffffff"
                     }
                 }
 
@@ -979,8 +992,8 @@ Page {
             id: device_info_background
             width: height
             height: ((parent.height - 25 )/3) - ((((parent.height - 25 )/3))*0.065)
-            color: "#2c2a2a"
-            border.color: "#2c2a2a"
+            color: "#39414e"
+            border.color: "#39414e"
             anchors.left: accel_z_background.right
             anchors.leftMargin: 5
             anchors.verticalCenter: accel_z_background.verticalCenter
@@ -1173,6 +1186,32 @@ Page {
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -25,9 +25,9 @@ Item {
         id: rectangle
         width: parent.width
         height: parent.height
-        color: "#2c2a2a"
+        color: "#39414e"
         anchors.fill: parent
-        border.color: "#2c2a2a"
+        border.color: "#39414e"
 
         Rectangle {
             id: led_ir
@@ -41,6 +41,8 @@ Item {
 
             Image {
                 id: ir_bearing_red_id
+                width: parent.width
+                height: parent.height
                 anchors.fill: parent
                 sourceSize.height: 800
                 mipmap: true
@@ -53,6 +55,8 @@ Item {
 
             Image {
                 id: ir_bearing_green_id
+                width: parent.width
+                height: parent.height
                 anchors.fill: parent
                 Layout.preferredHeight: 80
                 Layout.preferredWidth: 80
@@ -65,6 +69,8 @@ Item {
 
             Image {
                 id: ir_bearing_yellow_id
+                width: parent.width
+                height: parent.height
                 anchors.fill: parent
                 Layout.preferredHeight: 80
                 Layout.preferredWidth: 80
@@ -96,6 +102,8 @@ Item {
 
             Image {
                 id: thermo_bearing_red_id
+                width: parent.width
+                height: parent.height
                 anchors.fill: parent
                 mipmap: true
                 sourceSize.height: 800
@@ -290,7 +298,7 @@ Item {
             height: led_shock.height
             color: "#ffffff"
             text: qsTr("Shock")
-            font.pixelSize: 10+(10*((width-110)/110))
+            font.pixelSize: height*0.30
             anchors.right: parent.right
             anchors.rightMargin: 5
             anchors.left: led_shock.right
@@ -310,7 +318,7 @@ Item {
             height: led_roller.height
             color: "#ffffff"
             text: qsTr("Roller")
-            font.pixelSize: 10+(10*((width-110)/110))
+            font.pixelSize: height*0.30
             anchors.right: parent.right
             anchors.rightMargin: 5
             anchors.left: led_roller.right
@@ -330,7 +338,9 @@ Item {
             height: led_thermo.height
             color: "#ffffff"
             text: qsTr("Therm Bearing")
-            font.pixelSize: 10+(10*((width-110)/110))
+            lineHeight: 0.6
+            fontSizeMode: Text.Fit
+            font.pixelSize: height*0.30
             anchors.right: parent.right
             anchors.rightMargin: 5
             anchors.left: led_thermo.right
@@ -353,7 +363,9 @@ Item {
             height: led_ir.height
             color: "#ffffff"
             text: qsTr("IR Bearing")
-            font.pixelSize: 10+(10*((width-110)/110))
+            lineHeight: 0.6
+            fontSizeMode: Text.Fit
+            font.pixelSize: height*0.30
             anchors.right: parent.right
             anchors.rightMargin: 5
             anchors.verticalCenter: led_ir.verticalCenter
@@ -370,6 +382,30 @@ Item {
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

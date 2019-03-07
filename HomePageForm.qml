@@ -38,7 +38,8 @@ Page {
         width: parent.width
         height: parent.height
 
-        color: "#090808"
+        color: "#262d37"
+        border.color: "#262d37"
         StatusLED {
             id: bearing_status_home_0
             x: 0
@@ -537,6 +538,11 @@ Page {
             modal: true
             focus: true
             closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+            background: Rectangle {
+                implicitWidth: parent.width * 0.5
+                implicitHeight: parent.width *0.80
+                color: "#00fa00ff"
+            }
 
             Configuration {
                 id: configuration
@@ -599,6 +605,8 @@ Page {
 
     }
 }
+
+
 
 
 

@@ -7,7 +7,7 @@ Item {
 
     id: root
     width: 512
-    height: 384
+    height: 420
 
     signal close()
 
@@ -16,8 +16,9 @@ Item {
         anchors.fill: parent
         width: parent.width
         height: parent.height
-        color: "#2c2a2a"
-        border.color: "#2c2a2a"
+        color: "#39414e"
+        radius: width*0.06
+        border.color: "#39414e"
 
         function accessDatabase() {
             console.log("Access Database....")
@@ -81,6 +82,37 @@ Item {
 
         Component.onCompleted: accessDatabase()
 
+        Rectangle {
+            id: top_level_design
+            width: parent.width
+            height: parent.height*0.15
+            color: "#5ad9a4"
+            radius: configuration_background.radius
+            anchors.top: parent.top
+            anchors.topMargin: 0
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            border.color: "#5ad9a4"
+        }
+
+
+
+
+        Rectangle {
+            id: top_level_design_2
+            height: top_level_design.height/2
+            color: "#5ad9a4"
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.bottom: top_level_design.bottom
+            anchors.bottomMargin: 0
+            border.color: "#5ad9a4"
+        }
+
         Text {
             id: configuration_title
             width: configuration_background.width
@@ -88,7 +120,7 @@ Item {
             color: "#ffffff"
             text: qsTr("Configuration")
             anchors.topMargin: configuration_background.height*0.01
-            font.pixelSize: 40 + (40*((width - 512)/512))
+            font.pixelSize: height*0.8
             font.bold: true
             fontSizeMode: Text.Fit
             textFormat: Text.RichText
@@ -110,8 +142,8 @@ Item {
             color: "#ffffff"
             text: qsTr("Belt System Number")
             font.bold: true
-            font.pixelSize: 10 + (10*((width - 102)/102))
-            anchors.topMargin: configuration_background.height*0.09
+            font.pixelSize: height*0.30
+            anchors.topMargin: configuration_background.height*0.065
             anchors.top: configuration_title.bottom
             anchors.leftMargin: configuration_background.width*0.02
             anchors.left: parent.left
@@ -129,7 +161,7 @@ Item {
             width: configuration_background.width*0.25
             height: belt_system_number_label.height
             text: qsTr("")
-            font.pointSize: 8 + (8*((width - 128)/128))
+            font.pointSize: height*0.30
             anchors.verticalCenter: belt_system_number_label.verticalCenter
             anchors.leftMargin: configuration_background.width*0.02
             anchors.left: belt_system_number_label.right
@@ -146,8 +178,9 @@ Item {
             height: belt_system_number_label.height
             color: "#ffffff"
             text: qsTr("Double Tap Duration")
+            font.pixelSize: height*0.30
+            minimumPixelSize: 6
             font.bold: true
-            font.pixelSize: 10 + (10*((width - 102)/102))
             anchors.rightMargin: configuration_background.width*0.02
             anchors.right: double_tap_duration_value.left
             anchors.verticalCenter: belt_system_number_label.verticalCenter
@@ -165,7 +198,8 @@ Item {
             y: 71.2
             width: configuration_background.width*0.25
             height: belt_system_number_label.height
-            font.pointSize: 8 + (8*((width - 128)/128))
+            font.bold: true
+            font.pointSize: height*0.30
             anchors.verticalCenter: belt_system_number_label.verticalCenter
             anchors.rightMargin: configuration_background.width*0.02
             anchors.right: parent.right
@@ -189,7 +223,7 @@ Item {
             color: "#ffffff"
             text: qsTr("Belt Line Number")
             font.bold: true
-            font.pixelSize: 10 + (10*((width - 102)/102))
+            font.pixelSize: height*0.30
             anchors.topMargin: configuration_background.height*0.032
             anchors.top: belt_system_number_label.bottom
             anchors.leftMargin: configuration_background.width*0.02
@@ -208,7 +242,7 @@ Item {
             width: configuration_background.width*0.25
             height: belt_system_number_label.height
             text: qsTr("")
-            font.pointSize: 8 + (8*((width - 128)/128))
+            font.pointSize: height*0.30
             anchors.verticalCenter: belt_line_number_label.verticalCenter
             anchors.leftMargin: configuration_background.width*0.02
             anchors.left: belt_line_number_label.right
@@ -226,7 +260,7 @@ Item {
             color: "#ffffff"
             text: qsTr("Double Tap Intensity")
             font.bold: true
-            font.pixelSize: 10 + (10*((width - 102)/102))
+            font.pixelSize: height*0.30
             anchors.rightMargin: configuration_background.width*0.02
             anchors.right: double_tap_intensity_value.left
             anchors.verticalCenter: belt_line_number_label.verticalCenter
@@ -244,7 +278,8 @@ Item {
             y: 141.2
             width: configuration_background.width*0.25
             height: belt_system_number_label.height
-            font.pointSize: 8 + (8*((width - 128)/128))
+            font.bold: true
+            font.pointSize: height*0.30
             anchors.verticalCenter: belt_line_number_label.verticalCenter
             anchors.rightMargin: configuration_background.width*0.02
             anchors.right: parent.right
@@ -260,7 +295,7 @@ Item {
             color: "#ffffff"
             text: qsTr("Row Number")
             font.bold: true
-            font.pixelSize: 10 + (10*((width - 102)/102))
+            font.pixelSize: height*0.30
             anchors.topMargin: configuration_background.height*0.032
             anchors.top: belt_line_number_label.bottom
             anchors.leftMargin: configuration_background.width*0.02
@@ -279,7 +314,7 @@ Item {
             width: configuration_background.width*0.25
             height: belt_system_number_label.height
             text: qsTr("")
-            font.pointSize: 8 + (8*((width - 128)/128))
+            font.pointSize: height*0.30
             anchors.verticalCenter: row_number_label.verticalCenter
             anchors.leftMargin: configuration_background.width*0.02
             anchors.left: row_number_label.right
@@ -297,7 +332,7 @@ Item {
             color: "#ffffff"
             text: qsTr("Double Tap 6 Scale")
             font.bold: true
-            font.pixelSize: 10 + (10*((width - 102)/102))
+            font.pixelSize: height*0.30
             anchors.rightMargin: configuration_background.width*0.02
             anchors.right: double_tap_6_scal_value.left
             anchors.verticalCenter: row_number_label.verticalCenter
@@ -315,7 +350,8 @@ Item {
             y: 212.2
             width: configuration_background.width*0.25
             height: belt_system_number_label.height
-            font.pointSize: 8 + (8*((width - 128)/128))
+            font.bold: true
+            font.pointSize: height*0.30
             anchors.verticalCenter: row_number_label.verticalCenter
             anchors.rightMargin: configuration_background.width*0.02
             anchors.right: parent.right
@@ -341,7 +377,7 @@ Item {
             color: "#ffffff"
             text: qsTr("Roller Number")
             font.bold: true
-            font.pixelSize: 10 + (10*((width - 102)/102))
+            font.pixelSize: height*0.30
             anchors.topMargin: configuration_background.height*0.032
             anchors.top: row_number_label.bottom
             anchors.leftMargin: configuration_background.width*0.02
@@ -360,9 +396,9 @@ Item {
             width: configuration_background.width*0.25
             height: belt_system_number_label.height
             text: qsTr("")
-            font.pointSize: 8 + (8*((width - 128)/128))
-            anchors.verticalCenter: roller_number_label.verticalCenter
             anchors.leftMargin: configuration_background.width*0.02
+            font.pointSize: height*0.30
+            anchors.verticalCenter: roller_number_label.verticalCenter
             anchors.left: roller_number_label.right
             Layout.preferredHeight: 30
             Layout.preferredWidth: 133
@@ -378,7 +414,7 @@ Item {
             color: "#ffffff"
             text: "Sample Cycle Time (seconds)"
             font.bold: true
-            font.pixelSize: 10 + (10*((width - 102)/102))
+            font.pixelSize: height*0.30
             anchors.rightMargin: configuration_background.width*0.02
             anchors.right: sample_cycle_time_value.left
             anchors.verticalCenter: roller_number_label.verticalCenter
@@ -397,8 +433,9 @@ Item {
             width: configuration_background.width*0.25
             height: belt_system_number_label.height
             text: qsTr("")
+            font.bold: true
             placeholderText: "sec"
-            font.pointSize: 8 + (8*((width - 128)/128))
+            font.pointSize: height*0.30
             anchors.verticalCenter: roller_number_label.verticalCenter
             anchors.rightMargin: configuration_background.width*0.02
             anchors.right: parent.right
@@ -415,7 +452,7 @@ Item {
             color: "#ffffff"
             text: "Temperature Cycle Time (seconds)"
             font.bold: true
-            font.pixelSize: 10 + (10*((width - 102)/102))
+            font.pixelSize: height*0.30
             anchors.topMargin: configuration_background.height*0.032
             anchors.top: sample_cycle_time_label.bottom
             anchors.rightMargin: configuration_background.width*0.02
@@ -428,6 +465,7 @@ Item {
             wrapMode: Text.WordWrap
         }
 
+
         TextField {
             id: temperature_cycle_time_value
             x: 485.8
@@ -435,8 +473,9 @@ Item {
             width: configuration_background.width*0.25
             height: belt_system_number_label.height
             text: qsTr("")
+            font.bold: true
             placeholderText: "sec"
-            font.pointSize: 8 + (8*((width - 128)/128))
+            font.pointSize: height*0.30
             anchors.verticalCenter: temperature_cycle_time_label.verticalCenter
             anchors.rightMargin: configuration_background.width*0.02
             anchors.right: parent.right
@@ -445,21 +484,39 @@ Item {
             validator : RegExpValidator { regExp : /[0-9]+\.[0-9]+/ }
         }
 
+
         Button {
             id: configure_button
             x: 150
             y: 410
-            width: configuration_background.width*0.3
+            width: configuration_background.width
             height: configuration_background.height*0.12
             text: qsTr("Configure")
-            font.pointSize: 10 + (10*((width - 154)/154))
-            anchors.horizontalCenterOffset: ((width/2) + (configuration_background.width*0.02))*(-1)
+            anchors.bottomMargin: parent.height*0.01
+            anchors.horizontalCenterOffset: 0
+            font.pointSize: height*0.30
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottomMargin: configuration_background.height*0.032
-            anchors.bottom: parent.bottom
+            anchors.bottom: cancel_button_background_top.top
             Layout.preferredHeight: 40
             Layout.preferredWidth: 167
             font.bold: true
+
+            contentItem: Text {
+                text: configure_button.text
+                font.bold: configure_button.font.bold
+                font.pointSize: configure_button.font.pointSize
+                opacity: enabled? 1.0:0.3
+                color: "#ffffff"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            background: Rectangle {
+                id: configure_button_background
+                color: "#59c8d9"
+                radius: 0
+            }
+
             onClicked: {
                 var db = LocalStorage.openDatabaseSync("ConfigurationDB", "1.0", "Configuration Database", 1000000)
                 try {
@@ -495,23 +552,53 @@ Item {
             }
         }
 
+
+        Rectangle {
+            id: cancel_button_background_top
+            width: parent.width
+            height: cancel_button.height/2
+            color: "#e74c3c"
+            anchors.top: cancel_button.top
+            anchors.topMargin: 0
+        }
+
+
         Button {
             id: cancel_button
             x: 323
             y: 410
-            width: configuration_background.width*0.3
+            width: configuration_background.width
             height: configuration_background.height*0.12
             text: qsTr("Cancel")
-            font.pointSize: 10 + (10*((width - 154)/154))
+            anchors.bottomMargin: 0
+            anchors.horizontalCenterOffset: 0
+            font.pointSize: height*0.30
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: ((width/2) + (configuration_background.width*0.02))
-            anchors.bottomMargin: configuration_background.height*0.032
             anchors.bottom: parent.bottom
             Layout.preferredHeight: 40
             Layout.preferredWidth: 167
             font.bold: true
             onClicked: root.close()
+
+            contentItem: Text {
+                text: cancel_button.text
+                font.bold: cancel_button.font.bold
+                font.pointSize: cancel_button.font.pointSize
+                opacity: enabled? 1.0:0.3
+                color: "#ffffff"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            background: Rectangle {
+                id: cancel_button_background
+                color: "#e74c3c"
+                radius: configuration_background.radius
+            }
         }
+
+
+
     }
 
 }
@@ -616,11 +703,42 @@ Item {
 
 
 
-/*##^## Designer {
-    D{i:5;anchors_x:161.8}D{i:4;anchors_x:12.8;anchors_y:71.2}D{i:8;anchors_width:137.6;anchors_x:485.8}
-D{i:7;anchors_x:308.8}D{i:14;anchors_x:161.8}D{i:13;anchors_x:12.8;anchors_y:141.2}
-D{i:16;anchors_x:308.8}D{i:19;anchors_x:161.8}D{i:18;anchors_x:12.8;anchors_y:212.2}
-D{i:21;anchors_x:308.8}D{i:29;anchors_x:161.8}D{i:28;anchors_x:12.8;anchors_y:282.2}
-D{i:31;anchors_x:308.8}D{i:34;anchors_y:353.2}
-}
- ##^##*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

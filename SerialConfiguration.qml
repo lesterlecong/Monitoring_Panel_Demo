@@ -17,16 +17,16 @@ Item {
         width: parent.width
         height: parent.height
         color: "#39414e"
+        radius: parent.width*0.1
         anchors.fill: parent
         border.color: "#39414e"
-        radius: 30
 
         Rectangle {
             id: top_level_design
             width: parent.width
             height: parent.height*0.15
             color: "#5ad9a4"
-            radius: 30
+            radius: serial_config_background.radius
             anchors.top: parent.top
             anchors.topMargin: 0
             anchors.right: parent.right
@@ -41,7 +41,7 @@ Item {
 
         Rectangle {
             id: top_level_design_2
-            height: top_level_design.radius
+            height: top_level_design.height/2
             color: "#5ad9a4"
             anchors.right: parent.right
             anchors.rightMargin: 0
@@ -63,7 +63,7 @@ Item {
             anchors.top: top_level_design_2.bottom
             font.bold: true
             anchors.left: parent.left
-            font.pointSize: 8 + (8*((width-154)/154))
+            font.pointSize: height*0.3
             anchors.right: parent.right
             Layout.preferredHeight: 40
             Layout.preferredWidth: 126
@@ -104,7 +104,7 @@ Item {
             anchors.leftMargin: parent.width*0.05
             anchors.left: parent.left
             anchors.right: parent.right
-            font.pointSize: 8 + (8*((width-154)/154))
+            font.pointSize: height*0.30
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Layout.preferredHeight: 40
             Layout.preferredWidth: 152
@@ -144,7 +144,7 @@ Item {
             anchors.bottomMargin: parent.height*0.01
             font.bold: true
             anchors.bottom: cancel_serial_button_background_top.top
-            font.pointSize: 8 + (8*((width-154)/154))
+            font.pointSize: height*0.30
 
             contentItem: Text {
                 text: connect_serial_button.text
@@ -186,7 +186,7 @@ Item {
             color: "#ffffff"
             text: qsTr("Serial Configuration")
             anchors.verticalCenter: top_level_design.verticalCenter
-            font.pixelSize: 25 + (25*((height - 38)/38))
+            font.pixelSize: height*0.50
             font.bold: true
             fontSizeMode: Text.Fit
             wrapMode: Text.WordWrap
@@ -204,10 +204,12 @@ Item {
         Rectangle {
             id: cancel_serial_button_background_top
             width: parent.width
-            height: cancel_serial_button_background.radius
+            height: (cancel_serial_button.height)/2
             color: "#e74c3c"
             anchors.top: cancel_serial_button.top
             anchors.topMargin: 0
+
+
         }
 
         Button {
@@ -225,7 +227,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             Layout.preferredWidth: 108
             Layout.preferredHeight: 40
-            font.pointSize: 8 + (8*((width-154)/154))
+            font.pointSize: height*0.3
 
             contentItem: Text {
                 text: cancel_serial_button.text
@@ -240,7 +242,8 @@ Item {
             background: Rectangle {
                 id: cancel_serial_button_background
                 color: "#e74c3c"
-                radius: 30
+                radius: serial_config_background.radius
+
             }
 
 
@@ -251,8 +254,30 @@ Item {
 
 
 
+
+
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
