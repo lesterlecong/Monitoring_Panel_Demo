@@ -18,7 +18,8 @@ SOURCES += \
         main.cpp \
     accelerometerhandler.cpp \
     serialporthandler.cpp \
-    radialbar.cpp
+    radialbar.cpp \
+    packethandler.cpp
 
 RESOURCES += qml.qrc
 
@@ -36,4 +37,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     accelerometerhandler.h \
     serialporthandler.h \
-    radialbar.h
+    radialbar.h \
+    packethandler.h
+
+DISTFILES += \
+    ConversionTableBase.qml \
+    ConversionTableView.qml
