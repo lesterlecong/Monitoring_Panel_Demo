@@ -1,4 +1,5 @@
 #include "serialporthandler.h"
+#include "packethandler.h"
 
 #include <QSerialPort>
 #include <QCoreApplication>
@@ -10,9 +11,17 @@ SerialPortHandler::SerialPortHandler(QObject *parent) :
 {
     m_standardOutput << QObject::tr("Starting SerialPortHandler") <<endl;
 
+    m_packetHandler = new PacketHandler();
     m_serialPort = new QSerialPort();
     m_portName = "Default";
     m_baudRate = QSerialPort::Baud9600;
+
+    connect(m_packetHandler, SIGNAL(newTemperatureData(int, int, float)), this, SIGNAL(newTemperatureData(int, int, float)));
+    connect(m_packetHandler, SIGNAL(newAccelerometerData(int, int, float)), this, SIGNAL(newAccelerometerData(int, int, float)));
+    connect(m_packetHandler, SIGNAL(newLEDData(int, int, int)), this, SIGNAL(newLEDData(int, int, int)));
+    connect(m_packetHandler, SIGNAL(newAccelerometerData(int, int, float)), this, SIGNAL(newAccelerometerData(int, int, float)));
+    connect(m_packetHandler, SIGNAL(newMACAddressData(int, QString)), this, SIGNAL(newMACAddressData(int, QString)));
+    connect(m_packetHandler, SIGNAL(newBatteryLevelData(int, int)), this, SIGNAL(newBatteryLevelData(int, int)));
 
     connect(m_serialPort, &QSerialPort::readyRead, this, &SerialPortHandler::handleReadyRead);
     connect(m_serialPort, &QSerialPort::errorOccurred, this, &SerialPortHandler::handleError);
@@ -21,6 +30,11 @@ SerialPortHandler::SerialPortHandler(QObject *parent) :
 
 }
 
+SerialPortHandler::~SerialPortHandler()
+{
+    m_packetHandler->deleteLater();
+    m_serialPort->deleteLater();
+}
 
 void SerialPortHandler::startSerialPort()
 {
@@ -100,7 +114,7 @@ void SerialPortHandler::handleDataReceived()
     {
         for(int index = 0; index < m_dataReceiveList.size(); index++)
         {
-            parseReceivedData(m_dataReceiveList.at(index));
+            m_packetHandler->handlePacketData(m_dataReceiveList.at(index));
             m_standardOutput << "Read data:" << m_dataReceiveList.at(index) << endl;
         }
 
@@ -120,69 +134,6 @@ void SerialPortHandler::handleError(QSerialPort::SerialPortError error)
     }
 }
 
-void SerialPortHandler::parseReceivedData(QString data)
-{
-    QRegExp regex("[,]");
-    QStringList splitData = data.split(regex, QString::SkipEmptyParts);
-
-    if(splitData.count() < 11)
-    {
-        return;
-    }
-
-    QString startPacket = splitData.at(0);
-
-    if(startPacket.compare("p") != 0)
-    {
-        return;
-    }
-
-    int rollerNum = splitData.at(1).toInt();
-    float temp0Value = splitData.at(2).toFloat();
-    float temp1Value = splitData.at(3).toFloat();
-    float temp2Value = splitData.at(4).toFloat();
-    float accelXValue = splitData.at(5).toFloat();
-    float accelYValue = splitData.at(6).toFloat();
-    float accelZValue = splitData.at(7).toFloat();
-    int rpmValue = splitData.at(8).toInt();
-    int shockValue = splitData.at(9).toInt();
-    QString macAddr = splitData.at(10);
-    int batteryLevel = splitData.at(11).toInt();
-
-    emit newTemperatureData(rollerNum, 0, temp0Value);
-    emit newTemperatureData(rollerNum, 1, temp1Value);
-    emit newTemperatureData(rollerNum, 2, temp2Value);
-
-    int led_state_0 = 0;
-    int led_state_1 = 0;
-    int led_state_2 = 0;
-
-    led_state_0 = (temp0Value > 70 && temp0Value <= 80)? 1: led_state_0;
-    led_state_0 = (temp0Value > 80)? 2: led_state_0;
-
-    led_state_1 = (temp1Value > 70 && temp1Value <= 80)? 1: led_state_1;
-    led_state_1 = (temp1Value > 80)? 2: led_state_1;
-
-    led_state_2 = (temp2Value > 70 && temp2Value <= 80)? 1: led_state_2;
-    led_state_2 = (temp2Value > 80)? 2: led_state_2;
-
-    emit newLEDData(rollerNum, 0, led_state_0);
-    emit newLEDData(rollerNum, 1, led_state_1);
-    emit newLEDData(rollerNum, 2, led_state_2);
-    emit newLEDData(rollerNum, 3, shockValue);
-
-    emit newAccelerometerData(rollerNum, 0, accelXValue);
-    emit newAccelerometerData(rollerNum, 1, accelYValue);
-    emit newAccelerometerData(rollerNum, 2, accelZValue);
-
-    emit newRPMData(rollerNum, 0, rpmValue);
-
-    emit newMACAddressData(rollerNum, macAddr);
-
-    emit newBatteryLevelData(rollerNum, batteryLevel);
-
-
-}
 
 void SerialPortHandler::availablePorts()
 {

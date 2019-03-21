@@ -8,6 +8,8 @@
 #include <QTimer>
 #include <QString>
 
+class PacketHandler;
+
 class SerialPortHandler : public QObject
 {
     Q_OBJECT
@@ -17,6 +19,8 @@ class SerialPortHandler : public QObject
 
 public:
     explicit SerialPortHandler(QObject *parent = nullptr);
+
+    ~SerialPortHandler();
 
     Q_INVOKABLE void startSerialPort();
     Q_INVOKABLE void availablePorts();
@@ -44,8 +48,8 @@ public slots:
     void handleError(QSerialPort::SerialPortError error);
 private:
     void setupConnection();
-    void parseReceivedData(QString data);
 private:
+    PacketHandler *m_packetHandler;
     QSerialPort *m_serialPort = nullptr;
     QByteArray m_readData;
     QStringList m_dataReceiveList;
