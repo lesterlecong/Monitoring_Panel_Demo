@@ -524,7 +524,8 @@ Page {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    configuration_popup.open()
+                    //configuration_popup.open()
+                    conversion_popup.open()
                 }
             }
         }
@@ -601,10 +602,38 @@ Page {
             }
         }
 
+        Popup {
+            id: conversion_popup
+            x: ((parent.width/2) - (width/2))
+            y: ((parent.height/2) - (height/2))
+            width: parent.width * 0.8
+            height: parent.height *0.80
+            modal: true
+            focus: true
+            closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+            background: Rectangle {
+                implicitWidth: parent.width * 0.5
+                implicitHeight: parent.width *0.80
+                color: "#00fa00ff"
+            }
+
+            ConversionTableBase {
+                id: adc_to_celcius
+                x: ((parent.width/2) - (width/2))
+                y: ((parent.height/2) - (height/2))
+                width: conversion_popup.width
+                height: conversion_popup.height
+                //onClose: conversion_popup.close()
+            }
+        }
 
 
     }
 }
+
+
+
+
 
 
 
