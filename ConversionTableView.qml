@@ -9,6 +9,10 @@ Item {
     id: root
     width: 502
     height: 316
+    property alias unit_2_max_value: unit_2_max_value
+    property alias unit_2_min_value: unit_2_min_value
+    property alias unit_1_max_value: unit_1_max_value
+    property alias uint_1_min_value: uint_1_min_value
     property alias unit_2_max_label: unit_2_max_label
     property alias unit_2_min_label: unit_2_min_label
     property alias unit_1_max_label: unit_1_max_label
@@ -66,7 +70,7 @@ Item {
                            console.log("Sample Cycle Time:" + result.rows.item(i).sample_cycle_time)
                            console.log("Temperature Cycle Time:" + result.rows.item(i).temperature_cycle_time)
 
-                           belt_system_number_value.text = result.rows.item(i).belt_system_number
+                           uint_1_min_value.text = result.rows.item(i).belt_system_number
                            belt_line_number_value.text = result.rows.item(i).belt_line_number
                            row_number_value.text = result.rows.item(i).row_number
                            roller_number_value.text = result.rows.item(i).roller_number
@@ -92,7 +96,7 @@ Item {
         Rectangle {
             id: top_level_design
             width: parent.width
-            height: parent.height*0.15
+            height: parent.height*0.25
             color: "#15a775"
             radius: conversion_background.radius
             anchors.top: parent.top
@@ -109,12 +113,12 @@ Item {
 
         Text {
             id: conversion_type_title
-            width: conversion_background.width
-            height: parent.height * 0.12
+            width: parent.width
+            height: parent.height * 0.25
             color: "#ffffff"
             text: qsTr("ADC to Celcius")
-            anchors.topMargin: conversion_background.height*0.01
-            font.pixelSize: height*0.8
+            anchors.topMargin: 0
+            font.pixelSize: height*0.5
             font.bold: true
             fontSizeMode: Text.Fit
             textFormat: Text.RichText
@@ -131,12 +135,12 @@ Item {
 
         Text {
             id: unit_1_min_label
-            width: conversion_background.width*0.2
-            height: conversion_background.height*0.08
+            width: conversion_background.width*0.15
+            height: conversion_background.height*0.15
             color: "#ffffff"
             text: "Min ADC"
-            anchors.leftMargin: 5
-            anchors.topMargin: 5
+            anchors.leftMargin: conversion_background.width*0.02
+            anchors.topMargin: conversion_background.height*0.05
             font.bold: true
             font.pixelSize: height*0.30
             anchors.top: top_level_design.bottom
@@ -153,11 +157,13 @@ Item {
             id: unit_1_max_label
             x: 1
             y: 0
-            width: conversion_background.width*0.2
-            height: conversion_background.height*0.08
+            width: unit_1_min_label.width
+            height: unit_1_min_label.height
             color: "#ffffff"
             text: "Max ADC"
-            anchors.leftMargin: 5
+            anchors.rightMargin: conversion_background.width*0.02
+            anchors.right: unit_1_max_value.left
+            anchors.verticalCenter: unit_1_min_label.verticalCenter
             fontSizeMode: Text.Fit
             verticalAlignment: Text.AlignVCenter
             Layout.preferredHeight: 30
@@ -165,9 +171,6 @@ Item {
             Layout.preferredWidth: 135
             font.bold: true
             wrapMode: Text.WordWrap
-            anchors.left: parent.left
-            anchors.topMargin: 5
-            anchors.top: unit_1_min_label.bottom
             font.pixelSize: height*0.30
         }
 
@@ -175,11 +178,12 @@ Item {
             id: unit_2_min_label
             x: -5
             y: 1
-            width: conversion_background.width*0.2
-            height: conversion_background.height*0.08
+            width: unit_1_min_label.width
+            height: unit_1_min_label.height
             color: "#ffffff"
             text: "Min Celcius"
-            anchors.leftMargin: 5
+            anchors.leftMargin: 0
+            anchors.topMargin: conversion_background.height*0.05
             fontSizeMode: Text.Fit
             verticalAlignment: Text.AlignVCenter
             Layout.preferredHeight: 30
@@ -187,9 +191,8 @@ Item {
             Layout.preferredWidth: 135
             font.bold: true
             wrapMode: Text.WordWrap
-            anchors.left: parent.left
-            anchors.topMargin: 5
-            anchors.top: unit_1_max_label.bottom
+            anchors.left: unit_1_min_label.left
+            anchors.top: unit_1_min_label.bottom
             font.pixelSize: height*0.30
         }
 
@@ -197,11 +200,13 @@ Item {
             id: unit_2_max_label
             x: -4
             y: -1
-            width: conversion_background.width*0.2
-            height: conversion_background.height*0.08
+            width: unit_1_min_label.width
+            height: unit_1_min_label.height
             color: "#ffffff"
             text: "Max Celcius"
-            anchors.leftMargin: 5
+            anchors.rightMargin: conversion_background.width*0.02
+            anchors.right: unit_2_max_value.left
+            anchors.verticalCenter: unit_2_max_value.verticalCenter
             fontSizeMode: Text.Fit
             verticalAlignment: Text.AlignVCenter
             Layout.preferredHeight: 30
@@ -209,25 +214,79 @@ Item {
             Layout.preferredWidth: 135
             font.bold: true
             wrapMode: Text.WordWrap
-            anchors.left: parent.left
-            anchors.topMargin: 5
-            anchors.top: unit_2_min_label.bottom
             font.pixelSize: height*0.30
         }
 
         TextField {
-            id: belt_system_number_value
+            id: uint_1_min_value
             y: 71.2
             width: conversion_background.width*0.25
             height: unit_1_min_label.height
             text: qsTr("")
-            anchors.leftMargin: 10
+            anchors.leftMargin: conversion_background.width*0.02
             font.pointSize: height*0.30
             anchors.verticalCenter: unit_1_min_label.verticalCenter
             anchors.left: unit_1_min_label.right
             Layout.preferredHeight: 30
             Layout.preferredWidth: 133
             validator : RegExpValidator { regExp : /[0-9]+/ }
+        }
+
+        TextField {
+            id: unit_1_max_value
+            x: 121
+            y: 94
+            width: unit_1_min_value.width
+            height: unit_1_min_label.height
+            text: qsTr("")
+            anchors.rightMargin: conversion_background.width*0.02
+            anchors.right: parent.right
+            anchors.verticalCenterOffset: 1
+            Layout.preferredHeight: 30
+            validator: RegExpValidator {
+                regExp: /[0-9]+/
+            }
+            anchors.verticalCenter: unit_1_min_label.verticalCenter
+            font.pointSize: height*0.30
+            Layout.preferredWidth: 133
+        }
+
+        TextField {
+            id: unit_2_min_value
+            x: 116
+            y: 166
+            width: unit_1_min_value.width
+            height: unit_1_min_label.height
+            text: qsTr("")
+            anchors.verticalCenterOffset: 0
+            Layout.preferredHeight: 30
+            anchors.left: unit_1_min_label.right
+            validator: RegExpValidator {
+                regExp: /[0-9]+/
+            }
+            anchors.verticalCenter: unit_2_min_label.verticalCenter
+            anchors.leftMargin: 10
+            font.pointSize: height*0.30
+            Layout.preferredWidth: 133
+        }
+
+        TextField {
+            id: unit_2_max_value
+            x: 102
+            y: 222
+            width: uint_1_min_value.width
+            height: unit_1_min_label.height
+            text: qsTr("")
+            anchors.rightMargin: parent.width*0.02
+            anchors.right: parent.right
+            anchors.verticalCenterOffset: 0
+            Layout.preferredHeight: 30
+            validator: RegExpValidator {
+                regExp: /[0-9]+/
+            }
+            anchors.verticalCenter: unit_2_min_label.verticalCenter
+            font.pointSize: height*0.30
+            Layout.preferredWidth: 133
         }
 
 

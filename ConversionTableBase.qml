@@ -146,6 +146,11 @@ Item {
             anchors.rightMargin: 5
             anchors.left: parent.left
             anchors.leftMargin: 5
+
+            ConversionTableView {
+                id: adc_to_celcius
+            }
+
         }
 
 
