@@ -40,6 +40,4 @@ HEADERS += \
     radialbar.h \
     packethandler.h
 
-DISTFILES += \
-    ConversionTableBase.qml \
-    ConversionTableView.qml
+
