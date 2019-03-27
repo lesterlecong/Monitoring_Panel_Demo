@@ -1,5 +1,6 @@
 QT += quick
 CONFIG += c++11
+CONFIG += resources_big
 QT += charts
 QT += serialport
 
