@@ -46,30 +46,6 @@ void PacketHandler::handlePacketData(QString data)
     {
         (this->*packetHandlerMap[packetType])(splitData);
     }
-
-
-    /*
-    if(packetType.compare("W") == 0)
-    {
-        handleWakeUpPacket(splitData);
-    }
-    else if(packetType.compare("A") == 0)
-    {
-        handleConfigurationAckPacket(splitData);
-    }
-    else if(packetType.compare("D") == 0)
-    {
-        handleAccelerationPacket(splitData);
-    }
-    else if(packetType.compare("T") == 0)
-    {
-        handleTemperaturePacket(splitData);
-    }
-    else if(packetType.compare("L") == 0)
-    {
-        handleAlarmPacket(splitData);
-    }
-    */
 }
 
 void PacketHandler::handleWakeUpPacket(QStringList splitData)
@@ -88,7 +64,7 @@ void PacketHandler::handleWakeUpPacket(QStringList splitData)
                          << endl;
     #endif
 
-    //emit newMACAddressData(rollerNum, mac_address);
+    emit newMACAddressData(rollerNum, mac_address);
 }
 
 
@@ -139,10 +115,10 @@ void PacketHandler::handleAccelerationPacket(QStringList splitData)
     int accelZValue = splitData.at(index++).toInt();
     int rpmValue    = splitData.at(index++).toInt();
 
-    //emit newAccelerometerData(rollerNum, 0, accelXValue);
-    //emit newAccelerometerData(rollerNum, 1, accelYValue);
-    //emit newAccelerometerData(rollerNum, 2, accelZValue);
-    //emit newRPMData(rollerNum, 0, rpmValue);
+    emit newAccelerometerData(rollerNum, 0, accelXValue);
+    emit newAccelerometerData(rollerNum, 1, accelYValue);
+    emit newAccelerometerData(rollerNum, 2, accelZValue);
+    emit newRPMData(rollerNum, 0, rpmValue);
 
     #ifdef DEBUGEN
         m_standardOutput << QObject::tr("PacketHandler::handleAccelerationPacket:") << endl
@@ -168,9 +144,9 @@ void PacketHandler::handleTemperaturePacket(QStringList splitData)
     int temp1Value   = splitData.at(index++).toInt();   //ADC value
     int temp2Value   = splitData.at(index++).toInt();   //ADC value
     int batteryValue = splitData.at(index++).toInt(); //ADC value
-    //emit newTemperatureData(rollerNum, 0, temp0Value);
-    //emit newTemperatureData(rollerNum, 1, temp1Value);
-    //emit newTemperatureData(rollerNum, 2, temp2Value);
+    emit newTemperatureData(rollerNum, 0, temp0Value);
+    emit newTemperatureData(rollerNum, 1, temp1Value);
+    emit newTemperatureData(rollerNum, 2, temp2Value);
 
     int led_state_0 = 0;
     int led_state_1 = 0;
@@ -189,7 +165,7 @@ void PacketHandler::handleTemperaturePacket(QStringList splitData)
     //emit newLEDData(rollerNum, 1, led_state_1);
     //emit newLEDData(rollerNum, 2, led_state_2);
     //emit newLEDData(rollerNum, 3, shockValue);
-    //emit newBatteryLevelData(rollerNum, batteryLevel);
+    emit newBatteryLevelData(rollerNum, batteryValue);
 
     #ifdef DEBUGEN
         m_standardOutput << QObject::tr("PacketHandler::handleTemperaturePacket:") << endl
@@ -215,6 +191,14 @@ void PacketHandler::handleAlarmPacket(QStringList splitData)
     int alarmFlag = splitData.at(index++).toInt();
     int alarmValue = splitData.at(index++).toInt();
 
+    if(alarmType.compare("S") == 0) {
+        int shockValue = 0;
+        shockValue = (alarmValue > 0 && alarmValue <= 100)? 0 : shockValue;
+        shockValue = (alarmValue > 100 && alarmValue <= 200)? 1: shockValue;
+        shockValue = (alarmValue > 300)? 2: shockValue;
+
+        emit newLEDData(rollerNum, 3, shockValue);
+    }
     #ifdef DEBUGEN
         m_standardOutput << QObject::tr("PacketHandler::handleAlarmPacket:") << endl
                          << QObject::tr("--> roller #:")                     << rollerNum                     << endl

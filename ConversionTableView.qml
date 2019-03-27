@@ -4,7 +4,8 @@ import QtQuick.Controls 2.5
 import QtQuick.LocalStorage 2.12
 import QtQuick.Dialogs 1.1
 import "ConversionTableUtils.js" as ConversionTableUtils
-
+import "ConversionTableDBHandler.js" as ConversionTableDBHandler
+import "ConversionTableHandler.js" as CTHTest
 Item {
 
     id: root
@@ -57,62 +58,33 @@ Item {
         border.color: "#39414e"
 
         function accessDatabase() {
-            console.log("Access Database....")
-            console.log("Table name:" + conversion_type_db_name)
+            ConversionTableDBHandler.initDB()
+            ConversionTableDBHandler.setTableName(conversion_type_db_name)
+            ConversionTableDBHandler.setDefaultValue(unit_1_min_default_value,
+                                                     unit_1_max_default_value,
+                                                     unit_2_min_default_value,
+                                                     unit_2_max_default_value)
+            ConversionTableDBHandler.setDefaultType("INTEGER", "INTEGER", "DEC(10,2)", "DEC(10,2)")
+            ConversionTableDBHandler.startDB()
 
-            var db = LocalStorage.openDatabaseSync("ConversionTableDB", "1.0", "Conversion Table Database", 1000000)
-            try {
-                db.transaction(
-                   function(tx){
-                       var command = 'CREATE TABLE IF NOT EXISTS '+ conversion_type_db_name +
-                                     '(unit_1_min '  + unit_1_min_type  + ' DEFAULT ' + unit_1_min_default_value.toString() + ' , ' +
-                                     'unit_1_max '   + unit_1_max_type  + ' DEFAULT ' + unit_1_max_default_value.toString() + ' , ' +
-                                     'unit_2_min '   + unit_2_min_type  + ' DEFAULT ' + unit_2_min_default_value.toString() + ' , ' +
-                                     'unit_2_max '   + unit_2_max_type  + ' DEFAULT ' + unit_2_max_default_value.toString() + ' , ' +
-                                     'slope DEC(10,2) DEFAULT 0, intercept DEC(10,2) DEFAULT 0)'
+            var result = ConversionTableDBHandler.readAll()
+            for(var i = 0; i < result.rows.length; i++) {
+                console.log("unit 1 min value:" + result.rows.item(i).unit_1_min)
+                console.log("unit 1 max value:" + result.rows.item(i).unit_1_max)
+                console.log("unit 2 min value:" + result.rows.item(i).unit_2_min)
+                console.log("unit 2 max value:" + result.rows.item(i).unit_2_max)
 
-                        console.log("Create Table command: " + command)
-                        tx.executeSql(command);
+                console.log("slope:" + result.rows.item(i).slope)
+                console.log("intercept:" + result.rows.item(i).intercept)
 
-
-                       var check_count = tx.executeSql('SELECT * FROM ' + conversion_type_db_name)
-                       if(check_count.rows.length === 0) {
-                            command = 'INSERT INTO ' +  conversion_type_db_name +
-                            ' VALUES(' +
-                            unit_1_min_default_value + ' , ' +
-                            unit_1_max_default_value + ' , ' +
-                            unit_2_min_default_value + ' , ' +
-                            unit_2_max_default_value + ' , ' +
-                            ' 0, 0)'
-
-                            console.log("Insert command: " + command)
-                            tx.executeSql(command);
-                       }
-
-
-                       var result = tx.executeSql('SELECT * FROM ' + conversion_type_db_name)
-
-
-
-                       for(var i = 0; i < result.rows.length; i++) {
-                           console.log("unit 1 min value:" + result.rows.item(i).unit_1_min)
-                           console.log("unit 1 max value:" + result.rows.item(i).unit_1_max)
-                           console.log("unit 2 min value:" + result.rows.item(i).unit_2_min)
-                           console.log("unit 2 max value:" + result.rows.item(i).unit_2_max)
-
-                           console.log("slope:" + result.rows.item(i).slope)
-                           console.log("intercept:" + result.rows.item(i).intercept)
-
-                           unit_1_min_value.text = result.rows.item(i).unit_1_min
-                           unit_1_max_value.text = result.rows.item(i).unit_1_max
-                           unit_2_min_value.text = result.rows.item(i).unit_2_min
-                           unit_2_max_value.text = result.rows.item(i).unit_2_max
-                       }
-                    }
-                )
-            } catch(err) {
-                console.log("Error accessing database: " + err)
+                unit_1_min_value.text = result.rows.item(i).unit_1_min
+                unit_1_max_value.text = result.rows.item(i).unit_1_max
+                unit_2_min_value.text = result.rows.item(i).unit_2_min
+                unit_2_max_value.text = result.rows.item(i).unit_2_max
             }
+
+
+
         }
 
         Component.onCompleted: accessDatabase()
@@ -346,33 +318,17 @@ Item {
 
             onClicked: function() {
 
+                var slope = ConversionTableUtils.slope(unit_1_min_value.text, unit_2_min_value.text, unit_1_max_value.text, unit_2_max_value.text)
+                var intercept = ConversionTableUtils.intercept(unit_2_min_value.text, unit_2_max_value.text, slope)
 
-                var db = LocalStorage.openDatabaseSync("ConversionTableDB", "1.0", "Conversion Table Database", 1000000)
-                try {
+                ConversionTableDBHandler.setTableName(conversion_type_db_name)
+                ConversionTableDBHandler.update(unit_1_min_value.text,
+                                                unit_1_max_value.text,
+                                                unit_2_min_value.text,
+                                                unit_2_max_value.text,
+                                                slope,
+                                                intercept)
 
-                    db.transaction(
-                       function(tx){
-
-                           var slope = ConversionTableUtils.slope(unit_1_min_value.text, unit_2_min_value.text, unit_1_max_value.text, unit_2_max_value.text)
-                           var intercept = ConversionTableUtils.intercept(unit_2_min_value.text, unit_2_max_value.text, slope)
-
-                           var command = 'UPDATE ' + conversion_type_db_name + ' SET ' +
-                                         'unit_1_min = ' + unit_1_min_value.text + ' , ' +
-                                         'unit_1_max = ' + unit_1_max_value.text + ' , ' +
-                                         'unit_2_min = ' + unit_2_min_value.text + ' , ' +
-                                         'unit_2_max = ' + unit_2_max_value.text + ' , ' +
-                                         'slope = ' + slope.toString() + ' , ' +
-                                         'intercept = ' + intercept.toString()
-
-                           console.log("Save command: " + command)
-
-                           tx.executeSql(command)
-                       }
-                    )
-                }
-                catch(err) {
-                                console.log("Error accessing database: " + err)
-                            }
             }
 
 

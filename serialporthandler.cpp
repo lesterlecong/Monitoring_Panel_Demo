@@ -16,10 +16,11 @@ SerialPortHandler::SerialPortHandler(QObject *parent) :
     m_portName = "Default";
     m_baudRate = QSerialPort::Baud9600;
 
-    connect(m_packetHandler, SIGNAL(newTemperatureData(int, int, float)), this, SIGNAL(newTemperatureData(int, int, float)));
-    connect(m_packetHandler, SIGNAL(newAccelerometerData(int, int, float)), this, SIGNAL(newAccelerometerData(int, int, float)));
+    connect(m_packetHandler, SIGNAL(newTemperatureData(int, int, int)), this, SIGNAL(newTemperatureData(int, int, int)));
+    connect(m_packetHandler, SIGNAL(newAccelerometerData(int, int, int)), this, SIGNAL(newAccelerometerData(int, int, int)));
     connect(m_packetHandler, SIGNAL(newLEDData(int, int, int)), this, SIGNAL(newLEDData(int, int, int)));
-    connect(m_packetHandler, SIGNAL(newAccelerometerData(int, int, float)), this, SIGNAL(newAccelerometerData(int, int, float)));
+    connect(m_packetHandler, SIGNAL(newAccelerometerData(int, int, int)), this, SIGNAL(newAccelerometerData(int, int, int)));
+    connect(m_packetHandler, SIGNAL(newRPMData(int, int, int)), this, SIGNAL(newRPMData(int, int, int)));
     connect(m_packetHandler, SIGNAL(newMACAddressData(int, QString)), this, SIGNAL(newMACAddressData(int, QString)));
     connect(m_packetHandler, SIGNAL(newBatteryLevelData(int, int)), this, SIGNAL(newBatteryLevelData(int, int)));
 

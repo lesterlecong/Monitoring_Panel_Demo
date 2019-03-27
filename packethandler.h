@@ -18,8 +18,8 @@ public:
     void handlePacketData(QString data);
 
 signals:
-    void newTemperatureData(int rollerNum, int widgetNum, float data);
-    void newAccelerometerData(int rollerNum, int widgetNum, float data);
+    void newTemperatureData(int rollerNum, int widgetNum, int data);
+    void newAccelerometerData(int rollerNum, int widgetNum, int data);
     void newRPMData(int rollerNum, int widgetNum, int data);
     void newLEDData(int rollerNum, int widgetNum, int data);
     void newMACAddressData(int rollerNum, QString macAddr);

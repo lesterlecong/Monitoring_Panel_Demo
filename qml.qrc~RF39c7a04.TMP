@@ -123,10 +123,6 @@
         <file>Images/top_level_design_mask-01.svg</file>
         <file>ConversionTableBase.qml</file>
         <file>ConversionTableView.qml</file>
-        <file>Images/conversion_setting_button-01.svg</file>
         <file>ConversionTablePopUp.qml</file>
-        <file>ConversionTableUtils.js</file>
-        <file>ConversionTableDBHandler.js</file>
-        <file>ConversionTableHandler.js</file>
     </qresource>
 </RCC>

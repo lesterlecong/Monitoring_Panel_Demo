@@ -3,9 +3,12 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls.Styles 1.4
 import QtCharts 2.3
+import QtQuick.LocalStorage 2.12
 
 import com.kmi.accelerometerhandler 1.0
 import com.kmi.serialporthandler 1.0
+
+import "ConversionTableDBHandler.js" as ConversionTableDBHandler
 
 ApplicationWindow {
     id: window
@@ -39,6 +42,7 @@ ApplicationWindow {
         signal changeToYellow()
         signal changeToRed()
 
+
         onNewPortDetected: homepage.serial_configuration.serialPortsComboBox.addPort(portName)
         onNewLEDData: function(rollerNum, widgetNum, value) {
             if(swipeView.currentIndex == 0) {
@@ -55,9 +59,30 @@ ApplicationWindow {
         }
 
         onNewTemperatureData: function(rollerNum, widgetNum, value) {
+            var celciusVal = 0
             if(rollerNum === rollerpage.roller_number) {
-                rollerpage.thermometers[widgetNum].tempValue(value);
+                //ConversionTableDBHandler.setTableName("roller_0_adc_to_celcius_1")
+                celciusVal = Math.round(ConversionTableDBHandler.adcToCelcius(value) * 100)/100
+
+                rollerpage.thermometers[widgetNum].tempValue(celciusVal);
             }
+
+            var led_state = 0
+            led_state = (celciusVal > 70 && celciusVal <= 80)? 1:led_state
+            led_state = (celciusVal > 80)? 2: led_state
+
+            if(swipeView.currentIndex == 0) {
+
+                homepage.roller[rollerNum].leds[widgetNum].status(led_state);
+            }
+            else {
+                console.log("Roller Number:" + rollerpage.roller_number)
+
+                if(rollerNum === rollerpage.roller_number) {
+                    rollerpage.bearing_status.leds[widgetNum].status(led_state);
+                 }
+            }
+
         }
 
         onNewAccelerometerData: function(rollerNum, widgetNum, value) {
@@ -68,7 +93,8 @@ ApplicationWindow {
 
         onNewRPMData: function(rollerNum, widgetNum, value) {
             if(rollerNum === rollerpage.roller_number) {
-                rollerpage.rpm_gyro.needleValue(value)
+                var rpmVal = Math.round(ConversionTableDBHandler.adcToRPM(value))
+                rollerpage.rpm_gyro.needleValue(rpmVal)
             }
         }
 
@@ -81,10 +107,20 @@ ApplicationWindow {
         onNewBatteryLevelData: function(rollerNum, value){
             console.log("Roller:" + rollerNum + ", Value:" + value)
             if(rollerNum === rollerpage.roller_number) {
-                rollerpage.battery_level_progress_bar.value = value
+                var batVal = Math.round(ConversionTableDBHandler.adcToBatteryLevel(value))
+                rollerpage.battery_level_progress_bar.value = batVal
             }
         }
 
+        function initialize() {
+            console.log("Initialize db")
+            ConversionTableDBHandler.initDB()
+
+            //test only
+
+        }
+
+        //Component.onCompleted: initialize()
 
     }
 
